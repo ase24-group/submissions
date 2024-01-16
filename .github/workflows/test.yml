@@ -19,4 +19,4 @@ jobs:
         python-version: 3.8
 
     - name: Run Gate.py
-      run: python3 gate.py -f ../data/auto93.csv -t all
+      run: python3 hw/src/gate.py -f hw/data/auto93.csv -t all
