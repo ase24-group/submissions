@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  run-gate:
+  test:
     runs-on: ubuntu-latest
 
     steps:
