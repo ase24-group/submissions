@@ -1,6 +1,7 @@
 from data import Data
 from utils import output
 
+
 class Test:
     def __init__(self, config):
         self.config = config

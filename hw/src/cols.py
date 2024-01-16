@@ -2,6 +2,7 @@ import re
 from sym import Sym
 from num import Num
 
+
 class Cols:
     def __init__(self, row):
         self.x, self.y = {}, {}
@@ -11,13 +12,13 @@ class Cols:
         for at in range(len(row.cells)):
             txt = row.cells[at]
             if re.match(r"^[A-Z]", txt):
-                col = Num(txt,at)
+                col = Num(txt, at)
             else:
-                col = Sym(txt,at)
+                col = Sym(txt, at)
             self.all.append(col)
             if not re.match(r".*X$", txt):
                 if re.match(r".*X$", txt):
-                    self.klass=col
+                    self.klass = col
                 self.temp = self.y if re.match(r".*[!+-]$", txt) else self.x
                 if re.match(r".*[!+-]$", txt):
                     self.y[at] = col

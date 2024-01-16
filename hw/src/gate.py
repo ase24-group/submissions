@@ -24,6 +24,7 @@ import random, sys
 config = get_config(__doc__)
 test = Test(config)
 
+
 def run(todo):
     b4 = Box(test.config.copy())
     random.seed(test.config.seed)
@@ -39,9 +40,14 @@ def run(todo):
 
     return oops
 
+
 def run_all():
     all_attributes = dir(test)
-    methods = [attr for attr in all_attributes if callable(getattr(test, attr)) and (not attr.startswith("_"))]
+    methods = [
+        attr
+        for attr in all_attributes
+        if callable(getattr(test, attr)) and (not attr.startswith("_"))
+    ]
 
     bad = 0
     for method in methods:
@@ -51,7 +57,8 @@ def run_all():
     print(f'{"❌ FAIL" if bad > 0 else "✅ PASS"} {bad} fail(s)')
     sys.exit(bad)
 
-if (config.todo == "all"):
+
+if config.todo == "all":
     run_all()
 else:
     run(config.todo)
