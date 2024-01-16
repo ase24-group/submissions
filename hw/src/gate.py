@@ -17,5 +17,9 @@ OPTIONS:
 """
 
 from config import get_config
+from data import Data
+from utils import output
 
 config = get_config(__doc__)
+stats = Data(config.file).stats()
+print(stats)

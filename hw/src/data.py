@@ -3,7 +3,7 @@ from row import Row
 from cols import Cols
 
 class Data:
-    def __init__(self, src, fun):
+    def __init__(self, src, fun = None):
         self.rows = []
         self.cols = None
         if type(src) == str:
@@ -20,28 +20,22 @@ class Data:
                 fun(self, row)
             self.rows.append(self.cols.add(row))
         else:
-            self.cols = Cols(row)   
+            self.cols = Cols(row)
 
     def mid(self, cols):
         u=[]
         for _,col in (cols or self.cols.all):
             u.append(col.mid())
         return Row(u)
-    
+
     def div(self, cols):
         u = []
         for _, col in (cols or self.cols.all):
             u.append(col.div())
         return Row(u)
-    
-    def stats(self, cols, fun, ndivs):
+
+    def stats(self, cols = None, fun = None, ndivs = 2):
         u = {'.N': len(self.rows)}
-        for _,col in self.cols[cols or "y"]:
-            u[col.txt] = utils.rnd(self.mid(col), ndivs)
+        for _,col in self.cols.y.items():
+            u[col.txt] = utils.rnd(col.mid(), ndivs)
         return u
-    
-test = Data("../data/auto93.csv", None)
-
-
-
-    

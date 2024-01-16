@@ -1,4 +1,6 @@
-import re, num, sym
+import re
+from sym import Sym
+from num import Num
 
 class Cols:
     def __init__(self, row):
@@ -8,25 +10,24 @@ class Cols:
         self.names = row.cells
         for at in range(len(row.cells)):
             txt = row.cells[at]
-            print(f"At: {at}, txt: {txt}")
-            if re.match("^[A-Z]", txt):
-                col = num.Num(txt,at)
+            if re.match(r"^[A-Z]", txt):
+                col = Num(txt,at)
             else:
-                col = sym.Sym(txt,at)
-            all.append(col)
-            if not re.match(txt, "X$"):
-                if re.match(txt, "X$"):
+                col = Sym(txt,at)
+            self.all.append(col)
+            if not re.match(r".*X$", txt):
+                if re.match(r".*X$", txt):
                     self.klass=col
-                self.temp = self.y if re.match(txt, "[!+-]$") else self.x
-                if re.match(txt, "[!+-]$"):
+                self.temp = self.y if re.match(r".*[!+-]$", txt) else self.x
+                if re.match(r".*[!+-]$", txt):
                     self.y[at] = col
                 else:
                     self.x[at] = col
-            
+
     def add(self, row):
-        for _, cols in self.x.items():
-            print("COLS: " + str(cols))
-            for col in cols.items():
-                print("col: " + str(col))
-                col.add(row.cells[col.at])
+        for _, col in self.x.items():
+            col.add(row.cells[col.at])
+
+        for _, col in self.y.items():
+            col.add(row.cells[col.at])
         return row
