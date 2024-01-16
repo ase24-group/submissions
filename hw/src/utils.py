@@ -13,8 +13,8 @@ def csv(filename="-"):
 
 def output(x):
     class_name = x.__class__.__name__
-    items = ", ".join([f"{k}:{v}" for k, v in x.items() if k[0] != "_"])
-    return f"{class_name} {{{items}}}"
+    items = ", ".join([f"{k}: {v}" for k, v in x.items() if k[0] != "_"])
+    return f"{class_name} {{ {items} }}"
 
 def coerce(s):
    try: return ast.literal_eval(s)
