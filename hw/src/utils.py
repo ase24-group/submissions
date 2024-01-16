@@ -3,7 +3,7 @@ import fileinput, re, ast
 
 # Reference: https://discord.com/channels/1191838787219759154/1192507528882438247/1195863830136377345
 # Returns the values in the next row of the CSV as a list along with the row number of the next
-def csv(filename:str="-"):
+def csv(filename: str = "-"):
     i = 0
     with fileinput.FileInput(None if filename == "-" else filename) as src:
         for line in src:
@@ -18,7 +18,7 @@ def output(x):
     return f"{{{items}}}"
 
 
-def coerce(s:str):
+def coerce(s: str):
     # Converts string rep to python datatype
     try:
         return ast.literal_eval(s)
