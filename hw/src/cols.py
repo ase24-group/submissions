@@ -1,7 +1,6 @@
-import re
-import copy
+import re, num, sym
 
-class COLS:
+class Cols:
     def __init__(self, row):
         self.x, self.y = {}, {}
         self.all = []
@@ -11,9 +10,9 @@ class COLS:
             txt = row.cells[at]
             print(f"At: {at}, txt: {txt}")
             if re.match("^[A-Z]", txt):
-                col = NUM(txt,at)
+                col = num.Num(txt,at)
             else:
-                col = SYM(txt,at)
+                col = sym.Sym(txt,at)
             all.append(col)
             if not re.match(txt, "X$"):
                 if re.match(txt, "X$"):
