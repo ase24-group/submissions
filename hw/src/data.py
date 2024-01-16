@@ -37,5 +37,5 @@ class Data:
     def stats(self, cols = None, fun = None, ndivs = 2):
         u = {'.N': len(self.rows)}
         for _,col in self.cols.y.items():
-            u[col.txt] = utils.rnd(col.mid(), ndivs)
+            u[col.txt] = round(col.mid(), ndivs)
         return u

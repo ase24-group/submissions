@@ -1,4 +1,4 @@
-import fileinput, re, ast, math
+import fileinput, re, ast
 
 # Reference: https://discord.com/channels/1191838787219759154/1192507528882438247/1195863830136377345
 # Returns the values in the next row of the CSV as a list along with the row number of the next
@@ -12,18 +12,9 @@ def csv(filename="-"):
                 yield i, [coerce(x) for x in line.split(",")]
 
 def output(x):
-    class_name = x.__class__.__name__
-    items = ", ".join([f"{k}: {v}" for k, v in x.items() if k[0] != "_"])
-    return f"{class_name} {{ {items} }}"
+    items = ", ".join([f"{k}: {v}" for k, v in sorted(x.items()) if k[0] != "_"])
+    return f"{{{items}}}"
 
 def coerce(s):
    try: return ast.literal_eval(s)
    except Exception: return s.strip()
-
-def rnd(n, ndivs=None):
-    if type(n) != float:
-        return n  
-    if math.floor(n) == n:
-        return n
-    mult = 10**(ndivs or 2)
-    return round(n * mult) / mult
