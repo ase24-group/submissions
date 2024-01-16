@@ -1,40 +1,37 @@
-import utils
+import utils, row as rowlib, cols
+
 
 class Data:
     def __init__(self, src, fun):
         self.rows = []
         self.cols = None
-        self.adds(src, fun)
-
-    def adds(self, src, fun):
-        if type(src) == "string":
+        if type(src) == str:
             for _, x in utils.csv(src):
                 self.add(x, fun)
         else:
             for _, x in (src or []):
                 self.add(x, fun)
-        return self
 
-    def add(self, t, fun, row):
-        row = t if t.cells else Row(t)
+    def add(self, t, fun):
+        row = rowlib.ROW(t)
         if self.cols:
             if fun:
                 fun(self, row)
             self.rows.append(self.cols.add(row))
         else:
-            self.cols = Cols(row)   
+            self.cols = cols.COLS(row)   
 
     def mid(self, cols):
         u=[]
         for _,col in (cols or self.cols.all):
             u.append(col.mid())
-        return Row(u)
+        return rowlib.ROW(u)
     
     def div(self, cols):
         u = []
         for _, col in (cols or self.cols.all):
             u.append(col.div())
-        return Row(u)
+        return rowlib.ROW(u)
     
     def stats(self, cols, fun, ndivs):
         u = {'.N': len(self.rows)}
@@ -42,7 +39,7 @@ class Data:
             u[col.txt] = utils.rnd(self.mid(col), ndivs)
         return u
     
-
+test = Data("../data/auto93.csv", None)
 
 
 
