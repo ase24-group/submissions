@@ -23,3 +23,15 @@ class Test:
         out = output({"a": 1, "b": 2})
         print(out)
         return out == "{a: 1, b: 2}"
+
+    def test_count_classes(self, class_column: int = -1):
+        diabetes_data = Data(self.config.file)
+        class_counts = diabetes_data.cols.all[class_column].has
+        
+        # Number of classes in each file
+        number_of_classes = len(class_counts)
+        
+        # Number of rows for each class
+        number_of_rows = class_counts
+    
+    
