@@ -17,7 +17,7 @@ class Cols:
                 col = Sym(txt, at)
             self.all.append(col)
             if not re.match(r".*X$", txt):
-                if re.match(r".*X$", txt):
+                if re.match(r".*!$", txt):
                     self.klass = col
                 self.temp = self.y if re.match(r".*[!+-]$", txt) else self.x
                 if re.match(r".*[!+-]$", txt):
