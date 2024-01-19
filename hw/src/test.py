@@ -24,9 +24,9 @@ class Test:
         print(out)
         return out == "{a: 1, b: 2}"
 
-    def test_count_classes(self, class_column: int = -1) -> None:
+    def test_count_classes(self) -> None:
         data_obj = Data(self.config.file)
-        class_counts = data_obj.cols.all[class_column].has
+        class_counts = data_obj.cols.klass.has
 
         # Number of classes in each file
         number_of_classes = len(class_counts)
