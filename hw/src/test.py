@@ -24,14 +24,45 @@ class Test:
         print(out)
         return out == "{a: 1, b: 2}"
 
-    def test_count_classes(self, class_column: int = -1):
-        diabetes_data = Data(self.config.file)
-        class_counts = diabetes_data.cols.all[class_column].has
-        
+    def test_count_classes(self, class_column: int = -1) -> None:
+        data_obj = Data(self.config.file)
+        class_counts = data_obj.cols.all[class_column].has
+
         # Number of classes in each file
         number_of_classes = len(class_counts)
-        
+        out = "{0}:\n".format(self.config.file.split("/")[-1].split(".")[0])
+        out += f"number of classes: {number_of_classes}\n"
+
         # Number of rows for each class
-        number_of_rows = class_counts
-    
-    
+        col_widths = [len(x) for x in class_counts.keys()]
+
+        out += " ".join(
+            "{:<{}}".format(x, width)
+            for x, width in zip(class_counts.keys(), col_widths)
+        )
+        out += "\n"
+        out += " ".join(
+            "{:<{}}".format(x, width)
+            for x, width in zip(class_counts.values(), col_widths)
+        )
+
+        print(out)
+
+        if self.config.file == "hw/data/diabetes.csv":
+            return (
+                out
+                == "diabetes:\nnumber of classes: 2\npositive negative\n268      500     "
+            )
+
+        elif self.config.file == "hw/data/soybean.csv":
+            return (
+                out
+                == "soybean:\nnumber of classes: 19\ndiaporthe-stem-canker charcoal-rot rhizoctonia-root-rot "
+                "phytophthora-rot brown-stem-rot powdery-mildew downy-mildew brown-spot bacterial-blight "
+                "bacterial-pustule purple-seed-stain anthracnose phyllosticta-leaf-spot alternarialeaf-spot "
+                "frog-eye-leaf-spot diaporthe-pod-&-stem-blight cyst-nematode 2-4-d-injury herbicide-injury\n"
+                "20                    20           20                   88               44             "
+                "20             20           92         20               20                20                "
+                "44          20                     91                  91                 "
+                "15                          14            16           8               "
+            )
