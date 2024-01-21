@@ -33,6 +33,7 @@ def run(todo):
     oops = test_fun() == False
     if oops:
         print(f"❌ FAIL {todo}")
+        sys.exit(1)
     else:
         print(f"✅ PASS {todo}")
 
