@@ -24,6 +24,7 @@ jobs:
         python3 hw/src/gate.py -f hw/data/auto93.csv -t stats || exit 1
         python3 hw/src/gate.py -f hw/data/auto93.csv -t test_coerce || exit 1
         python3 hw/src/gate.py -f hw/data/auto93.csv -t test_output || exit 1
-
-        python3 hw/src/gate.py -f hw/data/diabetes.csv -t test_count_classes || exit 1
+        
         python3 hw/src/gate.py -f hw/data/soybean.csv -t test_count_classes || exit 1
+        python3 hw/src/gate.py -f hw/data/diabetes.csv -t test_count_classes || exit 1
+
