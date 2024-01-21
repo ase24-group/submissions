@@ -26,7 +26,7 @@ jobs:
         python3 hw/src/gate.py -f hw/data/auto93.csv -t test_coerce || TESTS_SUCCESS=false
         python3 hw/src/gate.py -f hw/data/auto93.csv -t test_output || TESTS_SUCCESS=false
         
-        python3 hw/src/gate.py -f hw/data/soybean.csv -t test_count_classes || TESTS_SUCCESS=false
         python3 hw/src/gate.py -f hw/data/diabetes.csv -t test_count_classes || TESTS_SUCCESS=false
+        python3 hw/src/gate.py -f hw/data/soybean.csv -t test_count_classes || TESTS_SUCCESS=false
 
         [[ "$TESTS_SUCCESS" == "true" ]] || exit 1

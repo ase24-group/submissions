@@ -1,0 +1,5 @@
+diabetes:
+number of classes: 2
+Class   	Count
+positive	268
+negative	500

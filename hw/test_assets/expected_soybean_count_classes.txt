@@ -1,0 +1,22 @@
+soybean:
+number of classes: 19
+Class                      	Count
+diaporthe-stem-canker      	20
+charcoal-rot               	20
+rhizoctonia-root-rot       	20
+phytophthora-rot           	88
+brown-stem-rot             	44
+powdery-mildew             	20
+downy-mildew               	20
+brown-spot                 	92
+bacterial-blight           	20
+bacterial-pustule          	20
+purple-seed-stain          	20
+anthracnose                	44
+phyllosticta-leaf-spot     	20
+alternarialeaf-spot        	91
+frog-eye-leaf-spot         	91
+diaporthe-pod-&-stem-blight	15
+cyst-nematode              	14
+2-4-d-injury               	16
+herbicide-injury           	8 
