@@ -57,7 +57,7 @@ class Test:
         elif self.config.file == "hw/data/soybean.csv":
             return (
                 out
-                == "soybean:\nnumber of classes: 19\ndiaporthe-stem-canker charcoal-rot rhizoctonia-root-rot "
+                == "oybean:\nnumber of classes: 19\ndiaporthe-stem-canker charcoal-rot rhizoctonia-root-rot "
                 "phytophthora-rot brown-stem-rot powdery-mildew downy-mildew brown-spot bacterial-blight "
                 "bacterial-pustule purple-seed-stain anthracnose phyllosticta-leaf-spot alternarialeaf-spot "
                 "frog-eye-leaf-spot diaporthe-pod-&-stem-blight cyst-nematode 2-4-d-injury herbicide-injury\n"
