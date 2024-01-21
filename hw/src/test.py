@@ -39,20 +39,20 @@ class Test:
         class_column_width = max(len(str(class_name)) for class_name, _ in table_data)
         count_column_width = max(len(str(count)) for _, count in table_data)
 
-        out += "{:<{}}\t{:<{}}\n".format("Class", class_column_width, "Count", count_column_width)
+        out += "{:<{}}\t{:<{}}\n".format(
+            "Class", class_column_width, "Count", count_column_width
+        )
         for class_name, count in table_data:
-            out += "{:<{}}\t{:<{}}\n".format(class_name, class_column_width, count, count_column_width)
+            out += "{:<{}}\t{:<{}}\n".format(
+                class_name, class_column_width, count, count_column_width
+            )
 
         print(out)
 
         if self.config.file == "hw/data/diabetes.csv":
             with open("hw/test_assets/expected_diabetes_count_classes.txt", "r") as f:
-                return (
-                    f.read() == out
-                )
+                return f.read() == out
 
         elif self.config.file == "hw/data/soybean.csv":
             with open("hw/test_assets/expected_soybean_count_classes.txt", "r") as f:
-                return (
-                    f.read() == out
-                )
+                return f.read() == out
