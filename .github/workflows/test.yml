@@ -19,4 +19,10 @@ jobs:
         python-version: 3.8
 
     - name: Run Gate.py
-      run: python3 hw/src/gate.py -f hw/data/auto93.csv -t all
+      run: |
+        python3 hw/src/gate.py -f hw/data/auto93.csv -t stats
+        python3 hw/src/gate.py -f hw/data/auto93.csv -t test_coerce
+        python3 hw/src/gate.py -f hw/data/auto93.csv -t test_output
+
+        python3 hw/src/gate.py -f hw/data/diabetes.csv -t test_count_classes
+        python3 hw/src/gate.py -f hw/data/soybean.csv -t test_count_classes
