@@ -17,7 +17,9 @@ class Sym:
     def mid(self):
         return self.mode
 
-    def like(self, x: str):
-        # UNSURE WHAT the.m IS??
-        # return (self.has[x] or 0) +
-        pass
+    def like(self, x: str, attribute_frequency_kludge: float, prior: float):
+        if x in self.has:
+            return (self.has[x] + attribute_frequency_kludge * prior) / (
+                self.n + attribute_frequency_kludge
+            )
+        return 0
