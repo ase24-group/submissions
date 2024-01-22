@@ -22,7 +22,7 @@ class Num:
         return self.mu
 
     def div(self):
-        return (self.n < 2 and 0) or ((self.m2 / (self.n - 1)) ** 0.5)
+        return 0 if self.n < 2 else (self.m2 / (self.n - 1)) ** 0.5
 
     def like(self, x: float) -> float:
         """
