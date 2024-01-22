@@ -33,10 +33,10 @@ def run(todo):
 
     oops = test_fun() == False
     if oops:
-        print(f"❌ FAIL {todo}")
+        print(f"❌ FAIL {todo}\n")
         sys.exit(1)
     else:
-        print(f"✅ PASS {todo}")
+        print(f"✅ PASS {todo}\n")
 
     test.config = b4
 
