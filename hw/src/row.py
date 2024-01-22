@@ -1,6 +1,7 @@
 from config import get_config
 import math
 
+
 class Row:
     def __init__(self, t):
         self.cells = t
@@ -16,10 +17,10 @@ class Row:
             if (most is None) or (tmp > most):
                 most, out = tmp, k
         return out, most
-    
+
     def like(self, data, n, nHypothesis):
         k = get_config(__doc__).k
-        prior = (len(data.rows) + k) / (n + k*nHypothesis)
+        prior = (len(data.rows) + k) / (n + k * nHypothesis)
         out = math.log(prior)
         for col in data.cols.x.values():
             v = self.cells[col.at]
