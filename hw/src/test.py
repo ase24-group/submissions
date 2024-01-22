@@ -8,7 +8,7 @@ class Test:
 
     def stats(self):
         # Test stats correct
-        stats = output(Data(self.config.file).stats())
+        stats = output(Data("../data/auto93.csv").stats())
         print(stats)
         return stats == "{.N: 398, Acc+: 15.57, Lbs-: 2970.42, Mpg+: 23.84}"
 
