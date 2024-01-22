@@ -58,7 +58,8 @@ def run_all():
 
     print(f'{"❌ FAIL" if bad > 0 else "✅ PASS"} {bad} fail(s)')
     sys.exit(bad)
-    
+
+
 def learn(data, row, my, kl) -> None:
     my.n += 1
     kl = row.cells[data.cols.klass.at]
