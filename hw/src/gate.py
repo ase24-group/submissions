@@ -20,6 +20,7 @@ from config import get_config
 from test import Test
 from box import Box
 import random, sys
+from data import Data
 
 config = get_config(__doc__)
 test = Test(config)
@@ -57,6 +58,15 @@ def run_all():
 
     print(f'{"❌ FAIL" if bad > 0 else "✅ PASS"} {bad} fail(s)')
     sys.exit(bad)
+    
+def learn(data, row, my, kl) -> None:
+    my.n += 1
+    kl = row.cells[data.cols.klass.at]
+    if my.n > 10:
+        my.tries += 1
+        my.acc = 1 if kl == row.likes(my.datas) else 0
+    my.datas[kl] = my.datas.get(kl, Data(data.cols.names))  # default value --> new data
+    my.datas[kl].add(row)
 
 
 if config.todo == "all":
