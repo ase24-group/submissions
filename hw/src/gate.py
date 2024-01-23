@@ -20,7 +20,6 @@ def run(todo):
     oops = test_fun() == False
     if oops:
         print(f"❌ FAIL {todo}\n")
-        sys.exit(1)
     else:
         print(f"✅ PASS {todo}\n")
 
@@ -43,7 +42,8 @@ def run_all():
             bad += 1
 
     print(f'{"❌ FAIL" if bad > 0 else "✅ PASS"} {bad} fail(s)')
-    sys.exit(bad)
+    if bad > 0:
+        sys.exit(1)
 
 
 if config.value.todo == "all":
