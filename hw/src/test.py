@@ -88,6 +88,7 @@ class Test:
         return wme.acc / (wme.tries) > 0.72
     
     def km(self):
+        print("#{:<4s}\t{}\t{}".format("acc", "k", "m"))
         for k in range(4):
             for m in range(4):
                 # if k != 0 or m != 0:
@@ -95,7 +96,7 @@ class Test:
                 config.value.m = m
                 wme = Box({"acc":0, "datas":{}, "tries": 0, "n": 0})
                 Data("../data/soybean.csv", lambda data, t: learn(data, t, wme))
-                print(k, m, wme.acc / (wme.tries))
+                print("{:05.2f}%\t{}\t{}".format(wme.acc * 100 / wme.tries, k, m))
 
 
 def learn(data, row, my) -> None:
