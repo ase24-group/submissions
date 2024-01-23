@@ -1,3 +1,6 @@
+from config import config
+
+
 class Sym:
     def __init__(self, s, n):
         self.txt = s or " "
@@ -17,9 +20,7 @@ class Sym:
     def mid(self):
         return self.mode
 
-    def like(self, x: str, attribute_frequency_kludge: float, prior: float):
+    def like(self, x: str, prior: float):
         if x in self.has:
-            return (self.has[x] + attribute_frequency_kludge * prior) / (
-                self.n + attribute_frequency_kludge
-            )
+            return (self.has[x] + config.value.m * prior) / (self.n + config.value.m)
         return 0

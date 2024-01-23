@@ -1,6 +1,7 @@
 import os
 from utils import coerce, output
 from data import Data
+from box import Box
 
 
 class Test:
@@ -82,14 +83,19 @@ class Test:
         return success
 
     def bayes(self):
-        pass
+        wme = Box({"acc": 0, "datas": {}, "tries": 0, "n": 0})
+        Data("../data/diabetes.csv", lambda data, t: learn(data, t, wme))
+        print(wme.acc / (wme.tries))
+        return wme.acc / (wme.tries) > 0.72
 
 
-def learn(data, row, my, kl) -> None:
+def learn(data, row, my) -> None:
     my.n += 1
     kl = row.cells[data.cols.klass.at]
     if my.n > 10:
         my.tries += 1
         my.acc = 1 if kl == row.likes(my.datas) else 0
+    print(data.cols.names)
     my.datas[kl] = my.datas.get(kl, Data(data.cols.names))  # default value --> new data
+    print(row)
     my.datas[kl].add(row)
