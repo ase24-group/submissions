@@ -1,5 +1,6 @@
-from data import Data
+import os
 from utils import coerce, output
+from data import Data
 
 
 class Test:
@@ -25,34 +26,57 @@ class Test:
         return out == "{a: 1, b: 2}"
 
     def count_classes(self) -> None:
-        data_obj = Data(self.config.file)
-        class_counts = data_obj.cols.klass.has
+        files = ["diabetes.csv", "soybean.csv"]
+        success = True
 
-        # Number of classes in each file
-        number_of_classes = len(class_counts)
-        out = "{0}:\n".format(self.config.file.split("/")[-1].split(".")[0])
-        out += f"number of classes: {number_of_classes}\n"
+        for file in files:
+            file_name, _ = os.path.splitext(file)
+            data = Data(f"../data/{file}")
+            class_counts = data.cols.klass.has
 
-        table_data = list(class_counts.items())
+            # Number of classes in each file
+            number_of_classes = len(class_counts)
+            out = f"{file_name}:\n"
+            out += f"number of classes: {number_of_classes}\n"
 
-        # Max width for each column
-        class_column_width = max(len(str(class_name)) for class_name, _ in table_data)
-        count_column_width = max(len(str(count)) for _, count in table_data)
+            table_data = list(class_counts.items())
+            total_rows = len(data.rows)
 
-        out += "{:<{}}\t{:<{}}\n".format(
-            "Class", class_column_width, "Count", count_column_width
-        )
-        for class_name, count in table_data:
-            out += "{:<{}}\t{:<{}}\n".format(
-                class_name, class_column_width, count, count_column_width
+            # Max width for each column
+            class_column_width = max(
+                len(str(class_name)) for class_name, _ in table_data
+            )
+            count_column_width = max(len(str(count)) for _, count in table_data)
+            percent_column = [((count / total_rows) * 100) for _, count in table_data]
+            percent_column_width = max(
+                len(f"{percent:05.2f} %") for percent in percent_column
             )
 
-        print(out)
+            out += "{:<{}}\t{:<{}}\t{:<{}}\n".format(
+                "Class",
+                class_column_width,
+                "Count",
+                count_column_width,
+                "Percentage",
+                percent_column_width,
+            )
+            for class_name, count in table_data:
+                percent = (count / total_rows) * 100
+                out += "{:<{}}\t{:<{}}\t{:<{}}\n".format(
+                    class_name,
+                    class_column_width,
+                    count,
+                    count_column_width,
+                    f"{percent:05.2f} %",
+                    percent_column_width,
+                )
 
-        if self.config.file == "hw/data/diabetes.csv":
-            with open("hw/test_assets/expected_diabetes_count_classes.txt", "r") as f:
-                return f.read() == out
+            print(out)
 
-        elif self.config.file == "hw/data/soybean.csv":
-            with open("hw/test_assets/expected_soybean_count_classes.txt", "r") as f:
-                return f.read() == out
+            with open(
+                f"../test_assets/expected_{file_name}_count_classes.txt", "r"
+            ) as f:
+                if f.read() != out:
+                    success = False
+
+        return success

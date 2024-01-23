@@ -1,5 +1,5 @@
 diabetes:
 number of classes: 2
-Class   	Count
-positive	268
-negative	500
+Class   	Count	Percentage
+positive	268	34.90 %
+negative	500	65.10 %
