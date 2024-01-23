@@ -14,7 +14,7 @@ class Data:
             self.add(src, fun)
 
     def add(self, t, fun):
-        row = t if hasattr(t, 'cells') else Row(t)
+        row = t if hasattr(t, "cells") else Row(t)
         if self.cols:
             if fun:
                 fun(self, row)
