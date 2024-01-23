@@ -26,5 +26,9 @@ class Row:
             v = self.cells[col.at]
             if v != "?":
                 inc = col.like(v, prior)
-                out += math.log(inc)
+                try:
+                    out += math.log(inc)
+                except:
+                    return float("-inf")
+
         return math.exp(out)
