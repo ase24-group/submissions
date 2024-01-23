@@ -85,8 +85,6 @@ class Test:
     def bayes(self):
         wme = Box({"acc": 0, "datas": {}, "tries": 0, "n": 0})
         Data("../data/diabetes.csv", lambda data, t: learn(data, t, wme))
-        print(wme.acc / (wme.tries))
-        print(wme.tries)
         return wme.acc / (wme.tries) > 0.72
 
 
