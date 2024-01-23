@@ -1,5 +1,5 @@
-from config import get_config
 import math
+from config import get_config
 
 
 class Row:

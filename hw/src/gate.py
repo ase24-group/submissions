@@ -16,10 +16,10 @@ OPTIONS:
   -t --todo     start up action                 = help
 """
 
+import random, sys
 from config import get_config
 from test import Test
 from box import Box
-import random, sys
 from data import Data
 
 config = get_config(__doc__)

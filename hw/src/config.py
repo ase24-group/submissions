@@ -1,6 +1,6 @@
 import re, sys
-from box import Box
 from utils import coerce
+from box import Box
 
 
 def doc(docstring):
