@@ -23,8 +23,9 @@ class Sym:
     def like(self, x: str, prior: float):
         likelihood = 0.0
         try:
-            likelihood = (self.has.get(x,0) + config.value.m * prior) / (self.n + config.value.m)
+            likelihood = (self.has.get(x, 0) + config.value.m * prior) / (
+                self.n + config.value.m
+            )
         except:
             likelihood = None
         return likelihood
-        

@@ -4,6 +4,7 @@ from data import Data
 from box import Box
 from config import config
 
+
 class Test:
     def __init__(self):
         pass
@@ -87,7 +88,7 @@ class Test:
         Data("../data/diabetes.csv", lambda data, t: learn(data, t, wme))
         print("Accuracy: ", wme.acc / (wme.tries))
         return wme.acc / (wme.tries) > 0.72
-    
+
     def km(self):
         print("#{:<4s}\t{}\t{}".format("acc", "k", "m"))
         for k in range(4):
@@ -95,7 +96,7 @@ class Test:
                 # if k != 0 or m != 0:
                 config.value.k = k
                 config.value.m = m
-                wme = Box({"acc":0, "datas":{}, "tries": 0, "n": 0})
+                wme = Box({"acc": 0, "datas": {}, "tries": 0, "n": 0})
                 Data("../data/soybean.csv", lambda data, t: learn(data, t, wme))
                 print("{:05.2f}%\t{}\t{}".format(wme.acc * 100 / wme.tries, k, m))
 
