@@ -21,6 +21,10 @@ class Sym:
         return self.mode
 
     def like(self, x: str, prior: float):
-        if x in self.has:
-            return (self.has[x] + config.value.m * prior) / (self.n + config.value.m)
-        return 0
+        likelihood = 0.0
+        try:
+            likelihood = (self.has.get(x,0) + config.value.m * prior) / (self.n + config.value.m)
+        except:
+            likelihood = float("inf")
+        return likelihood
+        
