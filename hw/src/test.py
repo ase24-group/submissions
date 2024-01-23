@@ -95,6 +95,6 @@ def learn(data, row, my) -> None:
     kl = row.cells[data.cols.klass.at]
     if my.n > 10:
         my.tries += 1
-        my.acc = 1 if kl == row.likes(my.datas) else 0
+        my.acc += 1 if kl == row.likes(my.datas)[0] else 0
     my.datas[kl] = my.datas.get(kl, Data(data.cols.names))  # default value --> new data
     my.datas[kl].add(row, None)
