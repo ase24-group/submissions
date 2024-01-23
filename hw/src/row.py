@@ -14,7 +14,7 @@ class Row:
             nHypothesis += 1
         for k, data in datas.items():
             tmp = self.like(data, n, nHypothesis)
-            if (most is None) or (tmp > most):
+            if tmp is not None and ((most is None) or (tmp > most)):
                 most, out = tmp, k
         return out, most
 

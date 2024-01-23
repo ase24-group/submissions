@@ -25,6 +25,6 @@ class Sym:
         try:
             likelihood = (self.has.get(x,0) + config.value.m * prior) / (self.n + config.value.m)
         except:
-            likelihood = float("inf")
+            likelihood = None
         return likelihood
         
