@@ -2,7 +2,7 @@ import os
 from utils import coerce, output
 from data import Data
 from box import Box
-
+from config import config
 
 class Test:
     def __init__(self):
@@ -86,6 +86,16 @@ class Test:
         wme = Box({"acc": 0, "datas": {}, "tries": 0, "n": 0})
         Data("../data/diabetes.csv", lambda data, t: learn(data, t, wme))
         return wme.acc / (wme.tries) > 0.72
+    
+    def km(self):
+        for k in range(4):
+            for m in range(4):
+                # if k != 0 or m != 0:
+                config.value.k = k
+                config.value.m = m
+                wme = Box({"acc":0, "datas":{}, "tries": 0, "n": 0})
+                Data("../data/soybean.csv", lambda data, t: learn(data, t, wme))
+                print(k, m, wme.acc / (wme.tries))
 
 
 def learn(data, row, my) -> None:
