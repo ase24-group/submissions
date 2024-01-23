@@ -1,5 +1,5 @@
 import math
-from config import get_config
+from config import config
 
 
 class Row:
@@ -19,7 +19,7 @@ class Row:
         return out, most
 
     def like(self, data, n, nHypothesis):
-        k = get_config(__doc__).k
+        k = config.value.k
         prior = (len(data.rows) + k) / (n + k * nHypothesis)
         out = math.log(prior)
         for col in data.cols.x.values():

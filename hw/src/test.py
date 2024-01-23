@@ -4,8 +4,8 @@ from data import Data
 
 
 class Test:
-    def __init__(self, config):
-        self.config = config
+    def __init__(self):
+        pass
 
     def stats(self):
         # Test stats correct
@@ -80,3 +80,16 @@ class Test:
                     success = False
 
         return success
+
+    def bayes(self):
+        pass
+
+
+def learn(data, row, my, kl) -> None:
+    my.n += 1
+    kl = row.cells[data.cols.klass.at]
+    if my.n > 10:
+        my.tries += 1
+        my.acc = 1 if kl == row.likes(my.datas) else 0
+    my.datas[kl] = my.datas.get(kl, Data(data.cols.names))  # default value --> new data
+    my.datas[kl].add(row)
