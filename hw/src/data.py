@@ -11,14 +11,12 @@ class Data:
             for _, x in utils.csv(src):
                 self.add(x, fun)
         else:
-            for x in src or []:
-                self.add(x, fun)
+            self.add(src, fun)
 
     def add(self, t, fun):
         row = t if hasattr(t, 'cells') else Row(t)
         if self.cols:
             if fun:
-                print("fun run")
                 fun(self, row)
             self.rows.append(self.cols.add(row))
         else:

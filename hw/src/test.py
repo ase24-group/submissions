@@ -86,6 +86,7 @@ class Test:
         wme = Box({"acc": 0, "datas": {}, "tries": 0, "n": 0})
         Data("../data/diabetes.csv", lambda data, t: learn(data, t, wme))
         print(wme.acc / (wme.tries))
+        print(wme.tries)
         return wme.acc / (wme.tries) > 0.72
 
 
@@ -95,7 +96,5 @@ def learn(data, row, my) -> None:
     if my.n > 10:
         my.tries += 1
         my.acc = 1 if kl == row.likes(my.datas) else 0
-    print(data.cols.names)
     my.datas[kl] = my.datas.get(kl, Data(data.cols.names))  # default value --> new data
-    print(row)
-    my.datas[kl].add(row)
+    my.datas[kl].add(row, None)

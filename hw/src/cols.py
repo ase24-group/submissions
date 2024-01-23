@@ -27,7 +27,6 @@ class Cols:
 
     def add(self, row):
         for _, col in self.x.items():
-            print(row.cells)
             col.add(row.cells[col.at])
 
         for _, col in self.y.items():
