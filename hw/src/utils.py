@@ -24,3 +24,16 @@ def coerce(s: str):
         return ast.literal_eval(s)
     except Exception:
         return s.strip()
+
+
+def slice(t: list, go: int = None, stop: int = None, inc: int = None) -> list:
+    go = go or 0
+    stop = stop or len(t)
+    inc = inc or 1
+
+    if go < 0:
+        go += len(t)
+    if stop < 0:
+        stop += len(t)
+
+    return t[go:stop:inc]

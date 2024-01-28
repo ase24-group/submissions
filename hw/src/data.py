@@ -1,6 +1,7 @@
 import utils
 from row import Row
 from cols import Cols
+import random
 
 
 class Data:
@@ -39,3 +40,25 @@ class Data:
         for _, col in self.cols.y.items():
             u[col.txt] = round(col.mid(), ndivs)
         return u
+
+    def gate(self, budget0: int, budget, some):
+        stats = []
+        bests = []
+
+        rows = random.shuffle(self.rows)
+        lite = utils.slice(rows, 1, budget0)
+        dark = utils.slice(rows, budget0 + 1)
+
+        for i in range(budget):
+            best, rest = self.best_rest(
+                lite, len(lite) ^ some
+            )  # BEST_REST NOT YET IMPLEMENTED
+            todo, selected = self.split(
+                best, rest, lite, dark
+            )  # SPLIT NOT YET IMPLEMENTED
+            stats[i] = selected.mid()
+            bests[i] = best.rows[1]
+
+            lite.append(dark.pop(todo))
+
+        return stats, bests
