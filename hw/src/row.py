@@ -32,3 +32,12 @@ class Row:
                     return float("-inf")
 
         return math.exp(out)
+
+    def d2h(self, data):
+        d, n = 0, 0
+
+        for _, col in enumerate(data.cols.y):
+            n = n + 1
+            d = d + abs(col.heaven - col.norm(self.cells[col.at])) ** 2
+
+        return (d ** .5) / (n ** .5)
