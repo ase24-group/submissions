@@ -100,7 +100,7 @@ class Test:
                 Data("../data/soybean.csv", lambda data, t: learn(data, t, wme))
                 print("{:05.2f}%\t{}\t{}".format(wme.acc * 100 / wme.tries, k, m))
 
-    def gate20():
+    def gate20(self):
         print("#best, mid")
         for i in range(20):
             d = Data("../data/auto93.csv")
