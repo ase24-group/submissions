@@ -100,6 +100,13 @@ class Test:
                 Data("../data/soybean.csv", lambda data, t: learn(data, t, wme))
                 print("{:05.2f}%\t{}\t{}".format(wme.acc * 100 / wme.tries, k, m))
 
+    def gate20():
+        print("#best, mid")
+        for i in range(20):
+            d = Data("../data/auto93.csv")
+            stats, bests = d.gate(4, 16, .5)
+            stat, best = stats[-1], bests[-1]
+            print(round(best.d2h(d), 2), round(stat.d2h(d), 2))
 
 def learn(data, row, my) -> None:
     my.n += 1
