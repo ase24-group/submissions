@@ -106,7 +106,7 @@ class Test:
             d = Data("../data/auto93.csv")
             stats, bests = d.gate(4, 16, 0.5)
             stat, best = stats[-1], bests[-1]
-            print(round(best.d2h(d), 2), round(stat.d2h(d), 2))
+            print(f"{round(best.d2h(d), 2)}\t{round(stat.d2h(d), 2)}")
 
 
 def learn(data, row, my) -> None:

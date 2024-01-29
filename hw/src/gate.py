@@ -8,13 +8,15 @@ import random, sys
 from test import Test
 from box import Box
 from config import config
+from lua import lua
 
 test = Test()
 
 
 def run(todo):
     b4 = Box(config.value.copy())
-    random.seed(config.value.seed)
+    # random.seed(config.value.seed)
+    lua.execute(f"math.randomseed({config.value.seed})")
     test_fun = getattr(test, todo, None)
 
     oops = test_fun() == False

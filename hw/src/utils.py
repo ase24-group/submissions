@@ -1,4 +1,5 @@
 import fileinput, re, ast
+from lua import lua
 
 
 # Reference: https://discord.com/channels/1191838787219759154/1192507528882438247/1195863830136377345
@@ -37,3 +38,14 @@ def slice(t: list, go: int = None, stop: int = None, inc: int = None) -> list:
         stop += len(t)
 
     return t[go:stop:inc]
+
+def shuffle(t):
+    u = []
+    for x in t:
+        u.append(x)
+
+    for i in range(len(u), 1, -1):
+        j = lua.execute(f"return math.random(1, {i})")
+        u[i-1], u[j-1] = u[j-1], u[i-1]
+
+    return u

@@ -3,6 +3,8 @@ from row import Row
 from cols import Cols
 import random
 
+from utils import shuffle
+
 
 class Data:
     def __init__(self, src, fun=None):
@@ -71,9 +73,10 @@ class Data:
         stats = []
         bests = []
 
-        random.shuffle(self.rows)
-        lite = utils.slice(self.rows, 0, budget0)
-        dark = utils.slice(self.rows, budget0 + 1)
+        # random.shuffle(self.rows)
+        rows = shuffle(self.rows)
+        lite = utils.slice(rows, 0, budget0)
+        dark = utils.slice(rows, budget0 + 1)
 
         for i in range(budget):
             best, rest = self.best_rest(lite, len(lite) ** some)
