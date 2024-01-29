@@ -74,10 +74,6 @@ class Data:
         random.shuffle(self.rows)
         lite = utils.slice(self.rows, 0, budget0)
         dark = utils.slice(self.rows, budget0 + 1)
-        print("lite: ")
-        print([x.cells for x in lite])
-        print("dark: ")
-        print([x.cells for x in dark])
 
         for i in range(budget):
             best, rest = self.best_rest(lite, len(lite) ** some)
