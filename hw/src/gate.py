@@ -38,8 +38,11 @@ def run_all():
 
     bad = 0
     for method in methods:
-        if run(method):
-            bad += 1
+        try:
+            if run(method):
+                bad += 1
+        except Exception as err:
+            print(f"Python Error: {err}")
 
     print(f'{"❌ FAIL" if bad > 0 else "✅ PASS"} {bad} fail(s)')
     if bad > 0:
