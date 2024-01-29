@@ -71,9 +71,9 @@ class Data:
         stats = []
         bests = []
 
-        rows = random.shuffle(self.rows)
-        lite = utils.slice(rows, 1, budget0)
-        dark = utils.slice(rows, budget0 + 1)
+        random.shuffle(self.rows)
+        lite = utils.slice(self.rows, 1, budget0)
+        dark = utils.slice(self.rows, budget0 + 1)
 
         for i in range(budget):
             best, rest = self.best_rest(lite, len(lite) ** some)
