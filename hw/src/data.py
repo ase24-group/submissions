@@ -39,7 +39,7 @@ class Data:
         for _, col in self.cols.y.items():
             u[col.txt] = round(col.mid(), ndivs)
         return u
-    
+
     def bestrest(self, rows, want, best, rest):
         rows.sort(key=lambda x: x.d2h())
         best, rest = [self.cols.names], [self.cols.names]
