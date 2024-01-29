@@ -39,6 +39,7 @@ def slice(t: list, go: int = None, stop: int = None, inc: int = None) -> list:
 
     return t[go:stop:inc]
 
+
 def shuffle(t):
     u = []
     for x in t:
@@ -46,6 +47,6 @@ def shuffle(t):
 
     for i in range(len(u), 1, -1):
         j = lua.execute(f"return math.random(1, {i})")
-        u[i-1], u[j-1] = u[j-1], u[i-1]
+        u[i - 1], u[j - 1] = u[j - 1], u[i - 1]
 
     return u
