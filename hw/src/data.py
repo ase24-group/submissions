@@ -14,7 +14,7 @@ class Data:
         else:
             self.add(src, fun)
 
-    def add(self, t, fun):
+    def add(self, t, fun = None):
         row = t if hasattr(t, "cells") else Row(t)
         if self.cols:
             if fun:
@@ -23,9 +23,9 @@ class Data:
         else:
             self.cols = Cols(row)
 
-    def mid(self, cols):
+    def mid(self, cols = None):
         u = []
-        for _, col in cols or self.cols.all:
+        for col in cols or self.cols.all:
             u.append(col.mid())
         return Row(u)
 
@@ -57,29 +57,33 @@ class Data:
                 out, max = i, tmp
         return out, selected
 
-    def best_rest(self, rows, want, best, rest):
+    def best_rest(self, rows, want, best = None, rest = None):
         rows.sort(key=lambda x: x.d2h(self))
-        best, rest = [self.cols.names], [self.cols.names]
+        best, rest = Data(self.cols.names), Data(self.cols.names)
         for i in range(len(rows)):
             if i <= want:
-                best.append(rows[i])
+                best.add(rows[i])
             else:
-                rest.append(rows[i])
-        return Data(best), Data(rest)
+                rest.add(rows[i])
+        return best, rest
 
     def gate(self, budget0: int, budget, some):
         stats = []
         bests = []
 
         random.shuffle(self.rows)
-        lite = utils.slice(self.rows, 1, budget0)
+        lite = utils.slice(self.rows, 0, budget0)
         dark = utils.slice(self.rows, budget0 + 1)
+        print("lite: ")
+        print([x.cells for x in lite])
+        print("dark: ")
+        print([x.cells for x in dark])
 
         for i in range(budget):
             best, rest = self.best_rest(lite, len(lite) ** some)
             todo, selected = self.split(best, rest, lite, dark)
-            stats[i] = selected.mid()
-            bests[i] = best.rows[1]
+            stats.append(selected.mid())
+            bests.append(best.rows[0])
 
             lite.append(dark.pop(todo))
 

@@ -33,10 +33,10 @@ class Row:
 
         return math.exp(out)
 
-    def d2h(self, data):
+    def d2h(self, data = None):
         d, n = 0, 0
 
-        for _, col in enumerate(data.cols.y):
+        for col in data.cols.y.values():
             n = n + 1
             d = d + abs(col.heaven - col.norm(self.cells[col.at])) ** 2
 
