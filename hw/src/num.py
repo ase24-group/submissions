@@ -32,3 +32,6 @@ class Num:
         nom = 2.718 ** (-0.5 * (x - self.mid()) ** 2 / sd**2)
         denom = sd * 2.5 + 1e-30
         return nom / denom
+
+    def norm(self, x):
+        return x if x == "?" else (x - self.lo) / (self.hi - self.lo + 1e-30)
