@@ -48,10 +48,10 @@ class Data:
         for i, row in enumerate(dark):
             b = row.like(best, len(lite), 2)
             r = row.like(rest, len(lite), 2)
-            if (b > r):
+            if b > r:
                 selected.add(row)
 
             tmp = abs(b + r) / abs(b - r + 1e-300)
-            if (tmp > max):
+            if tmp > max:
                 out, max = i, tmp
         return out, selected

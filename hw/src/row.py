@@ -40,4 +40,4 @@ class Row:
             n = n + 1
             d = d + abs(col.heaven - col.norm(self.cells[col.at])) ** 2
 
-        return (d ** .5) / (n ** .5)
+        return (d**0.5) / (n**0.5)
