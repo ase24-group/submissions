@@ -14,7 +14,7 @@ class Data:
         else:
             self.add(src, fun)
 
-    def add(self, t, fun = None):
+    def add(self, t, fun=None):
         row = t if hasattr(t, "cells") else Row(t)
         if self.cols:
             if fun:
@@ -23,7 +23,7 @@ class Data:
         else:
             self.cols = Cols(row)
 
-    def mid(self, cols = None):
+    def mid(self, cols=None):
         u = []
         for col in cols or self.cols.all:
             u.append(col.mid())
@@ -57,7 +57,7 @@ class Data:
                 out, max = i, tmp
         return out, selected
 
-    def best_rest(self, rows, want, best = None, rest = None):
+    def best_rest(self, rows, want, best=None, rest=None):
         rows.sort(key=lambda x: x.d2h(self))
         best, rest = Data(self.cols.names), Data(self.cols.names)
         for i in range(len(rows)):

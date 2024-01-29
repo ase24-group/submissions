@@ -33,7 +33,7 @@ class Row:
 
         return math.exp(out)
 
-    def d2h(self, data = None):
+    def d2h(self, data=None):
         d, n = 0, 0
 
         for col in data.cols.y.values():
