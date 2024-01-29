@@ -39,3 +39,13 @@ class Data:
         for _, col in self.cols.y.items():
             u[col.txt] = round(col.mid(), ndivs)
         return u
+
+    def best_rest(self, rows, want, best, rest):
+        rows.sort(key=lambda x: x.d2h())
+        best, rest = [self.cols.names], [self.cols.names]
+        for i in range(len(rows)):
+            if i <= want:
+                best.append(rows[i])
+            else:
+                rest.append(rows[i])
+        return Data(best), Data(rest)
