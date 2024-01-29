@@ -55,3 +55,13 @@ class Data:
             if tmp > max:
                 out, max = i, tmp
         return out, selected
+
+    def best_rest(self, rows, want, best, rest):
+        rows.sort(key=lambda x: x.d2h())
+        best, rest = [self.cols.names], [self.cols.names]
+        for i in range(len(rows)):
+            if i <= want:
+                best.append(rows[i])
+            else:
+                rest.append(rows[i])
+        return Data(best), Data(rest)
