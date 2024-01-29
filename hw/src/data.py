@@ -39,3 +39,19 @@ class Data:
         for _, col in self.cols.y.items():
             u[col.txt] = round(col.mid(), ndivs)
         return u
+
+    def split(self, best, rest, lite, dark):
+        selected = Data(self.cols.names)
+        max = 1e30
+        out = 1
+
+        for i, row in enumerate(dark):
+            b = row.like(best, len(lite), 2)
+            r = row.like(rest, len(lite), 2)
+            if (b > r):
+                selected.add(row)
+
+            tmp = abs(b + r) / abs(b - r + 1e-300)
+            if (tmp > max):
+                out, max = i, tmp
+        return out, selected
