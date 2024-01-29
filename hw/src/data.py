@@ -76,7 +76,7 @@ class Data:
         dark = utils.slice(rows, budget0 + 1)
 
         for i in range(budget):
-            best, rest = self.best_rest(lite, len(lite) ^ some)
+            best, rest = self.best_rest(lite, len(lite) ** some)
             todo, selected = self.split(best, rest, lite, dark)
             stats[i] = selected.mid()
             bests[i] = best.rows[1]
