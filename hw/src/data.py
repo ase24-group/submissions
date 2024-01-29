@@ -58,7 +58,7 @@ class Data:
         return out, selected
 
     def best_rest(self, rows, want, best, rest):
-        rows.sort(key=lambda x: x.d2h())
+        rows.sort(key=lambda x: x.d2h(self))
         best, rest = [self.cols.names], [self.cols.names]
         for i in range(len(rows)):
             if i <= want:
