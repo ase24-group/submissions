@@ -85,8 +85,12 @@ class Data:
 
         random.shuffle(self.rows)
 
-        info["top6"].append([[row.cells[y] for y in y_indices] for row in self.rows[:6]])
-        info["top50"].append([[row.cells[y] for y in y_indices] for row in self.rows[:50]])
+        info["top6"].append(
+            [[row.cells[y] for y in y_indices] for row in self.rows[:6]]
+        )
+        info["top50"].append(
+            [[row.cells[y] for y in y_indices] for row in self.rows[:50]]
+        )
 
         self.rows.sort(key=lambda x: x.d2h(self))
         info["most"].append([self.rows[0].cells[y] for y in y_indices])
