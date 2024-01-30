@@ -103,6 +103,10 @@ class Test:
     def gate20(self):
         print("#best, mid")
         for i in range(20):
+            if i != 0:
+                # Increment seed by 1 to set a new seed for each run
+                config.value.seed += 1
+
             d = Data("../data/auto93.csv")
             stats, bests = d.gate(4, 16, 0.5)
             stat, best = stats[-1], bests[-1]
