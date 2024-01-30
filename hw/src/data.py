@@ -67,40 +67,48 @@ class Data:
                 rest.add(rows[i])
         return best, rest
 
-    def gate(self, budget0: int, budget, some):
+    def gate(self, budget0: int, budget, some, info=None):
+        stats = []
+        bests = []
+
+        if not info:
+            info = {
+                "top6": [],
+                "top50": [],
+                "most": [],
+                "rand": [],
+                "mid": [],
+                "top": [],
+            }
+
         y_indices = self.cols.y.keys()
 
-        # print("1. top6", y values of first 6 examples in ROWS)  #baseline1
-        top6_1 = [[row.cells[y] for y in y_indices] for row in self.rows[:6]]
-        # print("2. top50", y values of first 50 examples in ROWS)  #baseline2
-        top50_2 = [[row.cells[y] for y in y_indices] for row in self.rows[:50]]
+        random.shuffle(self.rows)
 
-        # Sort rows on "distance to heaven"
+        info["top6"].append([[row.cells[y] for y in y_indices] for row in self.rows[:6]])
+        info["top50"].append([[row.cells[y] for y in y_indices] for row in self.rows[:50]])
+
         self.rows.sort(key=lambda x: x.d2h(self))
-        # print("3. most", y values of ROW[1])
-        most_3 = [self.rows[0].cells[y] for y in y_indices]
+        info["most"].append([self.rows[0].cells[y] for y in y_indices])
 
         random.shuffle(self.rows)
         lite = utils.slice(self.rows, 0, budget0)
         dark = utils.slice(self.rows, budget0 + 1)
 
-        rand_4 = []
-        stats = []
-        bests = []
-
         for i in range(budget):
             best, rest = self.best_rest(lite, len(lite) ** some)
             todo, selected = self.split(best, rest, lite, dark)
-            # print("4: rand", y values of centroid of (from DARK, select BUDGET0+i rows at random))
-            rand_4.append(
-                [
-                    [row.cells[y] for y in y_indices]
-                    for row in random.sample(dark, budget0 + 1)
-                ]
-            )
             stats.append(selected.mid())
             bests.append(best.rows[0])
 
+            rand = Data(self.cols.names)
+            for row in random.sample(dark, budget0 + 1):
+                rand.add(row)
+
+            info["rand"].append([rand.mid().cells[y] for y in y_indices])
+            info["mid"].append([selected.mid().cells[y] for y in y_indices])
+            info["top"].append([best.rows[0].cells[y] for y in y_indices])
+
             lite.append(dark.pop(todo))
 
-        return stats, bests, top6_1, top50_2, most_3, rand_4
+        return stats, bests, info

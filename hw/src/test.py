@@ -1,5 +1,5 @@
 import os
-from utils import coerce, output
+from utils import coerce, output, output_gate20_info
 from data import Data
 from box import Box
 from config import config
@@ -102,33 +102,23 @@ class Test:
 
     def gate20(self):
         print("#best, mid")
-        accumulate_outputs = {
-            "stats": [],
-            "bests": [],
-            "top6": [],
-            "top50": [],
-            "most": [],
-            "rand": [],
-        }
+        for i in range(20):
+            d = Data("../data/auto93.csv")
+            stats, bests, _ = d.gate(4, 16, 0.5)
+            stat, best = stats[-1], bests[-1]
+            print(f"{round(best.d2h(d), 2)}\t{round(stat.d2h(d), 2)}")
+
+    def gate20_info(self):
+        info = {}
+
         for i in range(20):
             if i != 0:
                 # Increment seed by 1 to set a new seed for each run
                 config.value.seed += 1
-
             d = Data("../data/auto93.csv")
-            stats, bests, top6_1, top50_2, most_3, rand_4 = d.gate(4, 16, 0.5)
-            accumulate_outputs["stats"].append(stats)
-            accumulate_outputs["bests"].append(bests)
-            accumulate_outputs["top6"].append(top6_1)
-            accumulate_outputs["top50"].append(top50_2)
-            accumulate_outputs["most"].append(most_3)
-            accumulate_outputs["rand"].append(rand_4)
+            _, _, info = d.gate(4, 10, 0.5, info)
 
-            stat, best = stats[-1], bests[-1]
-
-            print(round(best.d2h(d), 2), round(stat.d2h(d), 2))
-
-        print(accumulate_outputs)
+        output_gate20_info(info)
 
 
 def learn(data, row, my) -> None:
