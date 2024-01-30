@@ -68,19 +68,39 @@ class Data:
         return best, rest
 
     def gate(self, budget0: int, budget, some):
-        stats = []
-        bests = []
+        y_indices = self.cols.y.keys()
+
+        # print("1. top6", y values of first 6 examples in ROWS)  #baseline1
+        top6_1 = [[row.cells[y] for y in y_indices] for row in self.rows[:6]]
+        # print("2. top50", y values of first 50 examples in ROWS)  #baseline2
+        top50_2 = [[row.cells[y] for y in y_indices] for row in self.rows[:50]]
+
+        # Sort rows on "distance to heaven"
+        self.rows.sort(key=lambda x: x.d2h(self))
+        # print("3. most", y values of ROW[1])
+        most_3 = [self.rows[0].cells[y] for y in y_indices]
 
         random.shuffle(self.rows)
         lite = utils.slice(self.rows, 0, budget0)
         dark = utils.slice(self.rows, budget0 + 1)
 
+        rand_4 = []
+        stats = []
+        bests = []
+
         for i in range(budget):
             best, rest = self.best_rest(lite, len(lite) ** some)
             todo, selected = self.split(best, rest, lite, dark)
+            # print("4: rand", y values of centroid of (from DARK, select BUDGET0+i rows at random))
+            rand_4.append(
+                [
+                    [row.cells[y] for y in y_indices]
+                    for row in random.sample(dark, budget0 + 1)
+                ]
+            )
             stats.append(selected.mid())
             bests.append(best.rows[0])
 
             lite.append(dark.pop(todo))
 
-        return stats, bests
+        return stats, bests, top6_1, top50_2, most_3, rand_4

@@ -102,15 +102,33 @@ class Test:
 
     def gate20(self):
         print("#best, mid")
+        accumulate_outputs = {
+            "stats": [],
+            "bests": [],
+            "top6": [],
+            "top50": [],
+            "most": [],
+            "rand": [],
+        }
         for i in range(20):
             if i != 0:
                 # Increment seed by 1 to set a new seed for each run
                 config.value.seed += 1
 
             d = Data("../data/auto93.csv")
-            stats, bests = d.gate(4, 16, 0.5)
+            stats, bests, top6_1, top50_2, most_3, rand_4 = d.gate(4, 16, 0.5)
+            accumulate_outputs["stats"].append(stats)
+            accumulate_outputs["bests"].append(bests)
+            accumulate_outputs["top6"].append(top6_1)
+            accumulate_outputs["top50"].append(top50_2)
+            accumulate_outputs["most"].append(most_3)
+            accumulate_outputs["rand"].append(rand_4)
+
             stat, best = stats[-1], bests[-1]
+
             print(round(best.d2h(d), 2), round(stat.d2h(d), 2))
+
+        print(accumulate_outputs)
 
 
 def learn(data, row, my) -> None:
