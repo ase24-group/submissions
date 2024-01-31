@@ -1,0 +1,19 @@
+Answer 1:
+Yes, SMO performs better than random baselines. This is observed by comparing the print statements
+#1 (y values of first 6 examples in ROWS) and #2 (y values of first 50 examples in ROWS) that indicate 
+random baseline performance, with the print statement #6 (y values of first row in BEST) that indicates 
+the performance of SMO for different iterations.
+
+We can observe rows with a high value for Lbs-, and low values for Acc+ and Mpg+ under random baselines 
+(print statements #1 and #2) which is the opposite of the kind of values what we are looking for (we need
+ rows with low Lbs- and high Acc+ and Mpg+ values). 
+eg: [Lbs-: 4422.00, Acc+: 12.50, Mpg+: 10.00].
+
+
+The results obtained from SMO seem much better in this regard. Although we might not get rows that are 
+closest to heaven, they are a lot closer to heaven than the rows observed from random baselines.
+i.e., Lbs- values are generally lower, Mpg+ and Acc+ values of rows yielded by SMO are generally higher 
+than those given by random baselines.
+eg of a row yielded by SMO: [2125.00, 17.30, 40.00]
+
+
