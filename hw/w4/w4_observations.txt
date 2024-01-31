@@ -20,8 +20,8 @@ eg of a row yielded by SMO in auto93.csv: [2125.00, 17.30, 40.00]
 
 Question 2: How many y row evaluations are required for print 3?
 Answer 2:
-Print 3 statements print the row that is closest to heaven in the dataset. In order to find the row 
-closest to heaven in the dataset, the y values of all the rows in the dataset have to be evaluated
+Print 3 statements print the row that is closest to heaven in the dataset. In order to find the row
+that is closest to heaven in the dataset, the y values of all the rows in the dataset have to be evaluated
 (398 rows have to evaluated in auto93.csv).
 
 
@@ -31,7 +31,7 @@ SMO does not perform as well as the absolute best. This is because SMO does not 
 in the dataset into consideration while making its decision, unlike in the case of absolute best. 
 Even though the results we obtain through SMO are not the absolute best, the heuristics employed in 
 SMO help us pick a choice that is close enough to heaven while ensuring that only the y values of 
-a small subset of the dataset have to be evaluated. The speeds up the decision-making process significantly.
+a small subset of the dataset are evaluated. The speeds up the decision-making process significantly.
 
 Examples:
 Absolute best row in auto93.csv: [2130.00, 24.60, 40.00]
