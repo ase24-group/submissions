@@ -31,7 +31,7 @@ SMO does not perform as well as the absolute best. This is because SMO does not 
 in the dataset into consideration while making its decision, unlike in the case of absolute best. 
 Even though the results we obtain through SMO are not the absolute best, the heuristics employed in 
 SMO help us pick a choice that is close enough to heaven while ensuring that only the y values of 
-a small subset of the dataset are evaluated. The speeds up the decision-making process significantly.
+a small subset of the dataset are evaluated. This speeds up the decision-making process significantly.
 
 Examples:
 Absolute best row in auto93.csv: [2130.00, 24.60, 40.00]
