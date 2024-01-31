@@ -1,3 +1,4 @@
+Question 1: Does SMO do better than the random baselines?
 Answer 1:
 Yes, SMO performs better than random baselines. This is observed by comparing the print statements
 #1 (y values of first 6 examples in ROWS) and #2 (y values of first 50 examples in ROWS) that indicate 
@@ -15,5 +16,16 @@ closest to heaven, they are a lot closer to heaven than the rows observed from r
 i.e., Lbs- values are generally lower, Mpg+ and Acc+ values of rows yielded by SMO are generally higher 
 than those given by random baselines.
 eg of a row yielded by SMO: [2125.00, 17.30, 40.00]
+
+
+Question 2: How many y row evaluations are required for print 3?
+Answer 2:
+Print 3 statements print the row that is closest to heaven in the dataset. In order to find the row 
+closest to heaven in the dataset, the y values of all the rows in the dataset have to be evaluated
+(398 rows have to evaluated in auto93.csv).
+
+
+
+
 
 
