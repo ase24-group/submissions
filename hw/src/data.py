@@ -14,7 +14,7 @@ class Data:
         else:
             self.add(src, fun)
 
-    def add(self, t, fun):
+    def add(self, t, fun=None):
         row = t if hasattr(t, "cells") else Row(t)
         if self.cols:
             if fun:
@@ -23,9 +23,9 @@ class Data:
         else:
             self.cols = Cols(row)
 
-    def mid(self, cols):
+    def mid(self, cols=None):
         u = []
-        for _, col in cols or self.cols.all:
+        for col in cols or self.cols.all:
             u.append(col.mid())
         return Row(u)
 
@@ -57,30 +57,62 @@ class Data:
                 out, max = i, tmp
         return out, selected
 
-    def best_rest(self, rows, want, best, rest):
+    def best_rest(self, rows, want, best=None, rest=None):
         rows.sort(key=lambda x: x.d2h(self))
-        best, rest = [self.cols.names], [self.cols.names]
+        best, rest = Data(self.cols.names), Data(self.cols.names)
         for i in range(len(rows)):
             if i <= want:
-                best.append(rows[i])
+                best.add(rows[i])
             else:
-                rest.append(rows[i])
-        return Data(best), Data(rest)
+                rest.add(rows[i])
+        return best, rest
 
-    def gate(self, budget0: int, budget, some):
+    def gate(self, budget0: int, budget, some, info=None):
         stats = []
         bests = []
 
+        if not info:
+            info = {
+                "top6": [],
+                "top50": [],
+                "most": [],
+                "rand": [],
+                "mid": [],
+                "top": [],
+            }
+
+        y_indices = self.cols.y.keys()
+
         random.shuffle(self.rows)
-        lite = utils.slice(self.rows, 1, budget0)
+
+        info["top6"].append(
+            [[row.cells[y] for y in y_indices] for row in self.rows[:6]]
+        )
+        info["top50"].append(
+            [[row.cells[y] for y in y_indices] for row in self.rows[:50]]
+        )
+
+        self.rows.sort(key=lambda x: x.d2h(self))
+        info["most"].append([self.rows[0].cells[y] for y in y_indices])
+
+        random.shuffle(self.rows)
+        lite = utils.slice(self.rows, 0, budget0)
         dark = utils.slice(self.rows, budget0 + 1)
 
         for i in range(budget):
             best, rest = self.best_rest(lite, len(lite) ** some)
             todo, selected = self.split(best, rest, lite, dark)
-            stats[i] = selected.mid()
-            bests[i] = best.rows[1]
+            stats.append(selected.mid())
+            bests.append(best.rows[0])
+
+            rand = Data(self.cols.names)
+            for row in random.sample(dark, budget0 + 1):
+                rand.add(row)
+
+            info["rand"].append([rand.mid().cells[y] for y in y_indices])
+            info["mid"].append([selected.mid().cells[y] for y in y_indices])
+            info["top"].append([best.rows[0].cells[y] for y in y_indices])
 
             lite.append(dark.pop(todo))
 
-        return stats, bests
+        return stats, bests, info

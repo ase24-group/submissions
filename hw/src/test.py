@@ -1,5 +1,5 @@
 import os
-from utils import coerce, output
+from utils import coerce, output, output_gate20_info
 from data import Data
 from box import Box
 from config import config
@@ -104,9 +104,21 @@ class Test:
         print("#best, mid")
         for i in range(20):
             d = Data("../data/auto93.csv")
-            stats, bests = d.gate(4, 16, 0.5)
+            stats, bests, _ = d.gate(4, 16, 0.5)
             stat, best = stats[-1], bests[-1]
-            print(round(best.d2h(d), 2), round(stat.d2h(d), 2))
+            print(f"{round(best.d2h(d), 2)}\t{round(stat.d2h(d), 2)}")
+
+    def gate20_info(self):
+        info = {}
+
+        for i in range(20):
+            if i != 0:
+                # Increment seed by 1 to set a new seed for each run
+                config.value.seed += 1
+            d = Data("../data/auto93.csv")
+            _, _, info = d.gate(4, 10, 0.5, info)
+
+        output_gate20_info(info)
 
 
 def learn(data, row, my) -> None:

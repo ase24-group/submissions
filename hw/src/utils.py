@@ -37,3 +37,19 @@ def slice(t: list, go: int = None, stop: int = None, inc: int = None) -> list:
         stop += len(t)
 
     return t[go:stop:inc]
+
+
+def output_gate20_info(info):
+    for i, (k, v) in enumerate(info.items()):
+        for t in v:
+            print(f"{i + 1}. {k:<5} {pad_numbers(t)}")
+        print()
+
+
+def pad_numbers(t):
+    s = ""
+    if isinstance(t[0], list):
+        s = f"[{', '.join([f'{pad_numbers(v)}' for v in t])}]"
+    else:
+        s = f"[{', '.join([f'{v:5.2f}' for v in t])}]"
+    return s
