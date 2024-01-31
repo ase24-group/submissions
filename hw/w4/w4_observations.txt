@@ -15,7 +15,7 @@ The results obtained from SMO seem much better in this regard. Although we might
 closest to heaven, they are a lot closer to heaven than the rows observed from random baselines.
 i.e., Lbs- values are generally lower, Mpg+ and Acc+ values of rows yielded by SMO are generally higher 
 than those given by random baselines.
-eg of a row yielded by SMO: [2125.00, 17.30, 40.00]
+eg of a row yielded by SMO in auto93.csv: [2125.00, 17.30, 40.00]
 
 
 Question 2: How many y row evaluations are required for print 3?
@@ -25,7 +25,16 @@ closest to heaven in the dataset, the y values of all the rows in the dataset ha
 (398 rows have to evaluated in auto93.csv).
 
 
+Question 3: How does SMO do compared to absolute best?
+Answer 3:
+SMO does not perform as well as the absolute best. This is because SMO does not take all the rows 
+in the dataset into consideration while making its decision, unlike in the case of absolute best. 
+Even though the results we obtain through SMO are not the absolute best, the heuristics employed in 
+SMO help us pick a choice that is close enough to heaven while ensuring that only the y values of 
+a small subset of the dataset have to be evaluated. The speeds up the decision-making process significantly.
 
-
+Examples:
+Absolute best row in auto93.csv: [2130.00, 24.60, 40.00]
+A row yielded by SMO in auto93.csv: [2125.00, 17.30, 40.00]
 
 
