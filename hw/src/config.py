@@ -1,4 +1,4 @@
-"""
+GATE_DOC = """
 gate: guess, assess, try, expand
 (c) 2023, Tim Menzies, BSD-2
 Learn a little, guess a lot, try the strangest guess, learn a little more, repeat
@@ -14,6 +14,30 @@ OPTIONS:
   -m --m        low attribute frequency kludge  = 2
   -s --seed     random number seed              = 31210
   -t --todo     start up action                 = help
+"""
+
+MYLO_DOC = """
+mylo: recursive bi-clustering via random projections (lo is less. less is more. go lo)
+(c) 2023, Tim Menzies, BSD-2
+
+USAGE:
+  lua mylo.lua [OPTIONS]
+
+OPTIONS:
+  -b --bins   max number of bins              = 16
+  -B --Beam   max number of ranges            = 10
+  -c --cohen  small effect size               = .35
+  -C --Cut    ignore ranges less than C*max   = .1
+  -d --d      frist cut                       = 32
+  -D --D      second cut                      = 4
+  -f --file   csv data file name              = ../data/diabetes.csv
+  -F --Far    how far to search for faraway?  = .95
+  -h --help   show help                       = false
+  -H --Half   #items to use in clustering     = 256
+  -p --p      weights for distance            = 2
+  -s --seed   random number seed              = 31210
+  -S --Support coeffecient on best            = 2
+  -t --todo   start up action                 = help
 """
 
 import re, sys
@@ -51,6 +75,3 @@ class Config:
 
     def set_config(self):
         self.value = self.cli(self.doc())
-
-
-config = Config(__doc__)
