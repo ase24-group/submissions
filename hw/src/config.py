@@ -76,10 +76,11 @@ class Config:
     def set_config(self):
         self.value = self.cli(self.doc())
 
+
 config = None
-if sys.argv[0]=="gate.py":
+if sys.argv[0] == "gate.py":
     config = Config(GATE_DOC)
-elif sys.argv[0]=="mylo.py":
+elif sys.argv[0] == "mylo.py":
     config = Config(MYLO_DOC)
 else:
     print("Config is being called from an unknown file")

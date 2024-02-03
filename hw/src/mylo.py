@@ -10,6 +10,7 @@ from config import config
 
 test = Test()
 
+
 def run(todo):
     b4 = Box(config.value.copy())
     random.seed(config.value.seed)
@@ -51,4 +52,3 @@ if config.value.todo == "all":
     run_all()
 else:
     run(config.value.todo)
-
