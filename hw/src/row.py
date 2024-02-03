@@ -1,5 +1,6 @@
 import math
 from config import config
+import sys
 
 
 class Row:
@@ -37,7 +38,11 @@ class Row:
         d, n = 0, 0
 
         for col in data.cols.y.values():
-            n = n + 1
-            d = d + abs(col.heaven - col.norm(self.cells[col.at])) ** 2
+            try:
+                x = self.cells[col.at]
+                n = n + 1
+                d = d + abs(col.heaven - col.norm(self.cells[col.at])) ** 2
+            except IndexError:
+                sys.stderr.write("?")
 
         return (d**0.5) / (n**0.5)
