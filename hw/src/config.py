@@ -21,7 +21,7 @@ mylo: recursive bi-clustering via random projections (lo is less. less is more. 
 (c) 2023, Tim Menzies, BSD-2
 
 USAGE:
-  lua mylo.lua [OPTIONS]
+  python3 mylo.py [OPTIONS]
 
 OPTIONS:
   -b --bins   max number of bins              = 16
