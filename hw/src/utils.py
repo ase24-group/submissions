@@ -1,4 +1,5 @@
 import fileinput, re, ast
+import random
 
 
 # Reference: https://discord.com/channels/1191838787219759154/1192507528882438247/1195863830136377345
@@ -53,3 +54,7 @@ def pad_numbers(t):
     else:
         s = f"[{', '.join([f'{v:5.2f}' for v in t])}]"
     return s
+
+
+def any(t):
+    return random.choice(t)
