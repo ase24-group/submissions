@@ -3,6 +3,7 @@ from test import test
 from box import Box
 from config import config
 
+
 def run(todo):
     if todo == "all":
         run_all()
