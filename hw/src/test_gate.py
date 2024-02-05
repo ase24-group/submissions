@@ -5,7 +5,7 @@ from box import Box
 from config import config
 
 
-class Test:
+class TestGate:
     def __init__(self):
         pass
 
