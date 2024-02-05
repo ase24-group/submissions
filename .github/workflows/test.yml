@@ -18,8 +18,12 @@ jobs:
       with:
         python-version: 3.8
 
-    - name: Run Gate.py
+    - name: Run gate.py
       run: |
         cd hw/src
         python3 gate.py -t all
+
+    - name: Run mylo.py
+      run: |
+        cd hw/src
         python3 mylo.py -t all
