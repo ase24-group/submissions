@@ -47,7 +47,7 @@ class Row:
 
         return (d**0.5) / (n**0.5)
 
-    def dist(self, other, data, d: int = 0, n: int = 0, p=config.p):
+    def dist(self, other, data, d: int = 0, n: int = 0, p=config.value.p):
         for col in data.cols.x.values():
             n += 1
             d += col.dist(self.cells[col.at], other.cells[col.at]) ** 2
