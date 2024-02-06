@@ -53,6 +53,6 @@ class Row:
             d += col.dist(self.cells[col.at], other.cells[col.at]) ** 2
         return (d / n) ** (1 / p)
 
-    def neighbors(self, data, rows):
+    def neighbors(self, data, rows=None):
         rows = rows if rows else data.rows
         return sorted(rows, key=lambda row: self.dist(row, data))

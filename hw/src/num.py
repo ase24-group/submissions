@@ -51,4 +51,4 @@ class Num:
         if y == "?":
             y = 1 if x < 0.5 else 0
 
-        return math.abs(x - y)
+        return abs(x - y)

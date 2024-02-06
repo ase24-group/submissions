@@ -1,4 +1,4 @@
-import random, sys
+import random, sys, traceback
 from test import test
 from box import Box
 from config import config
@@ -17,6 +17,7 @@ def run(todo):
         oops = test_fun() == False
     except Exception as err:
         print(f"Python Error: {err}")
+        traceback.print_exc()
         oops = True
 
     if oops:
