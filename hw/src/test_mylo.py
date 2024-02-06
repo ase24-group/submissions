@@ -16,3 +16,11 @@ class TestMylo:
                 cells = f"{cells:<40}"
                 dist = f"{round(row.dist(r1, d), 2):<10}"
                 print(f"{index}{cells}{dist}")
+
+    def far(self):
+        d = Data("../data/auto93.csv")
+        a, b, dist, evals = d.farapart(d.rows, True)
+        print(f"far1:     {a.cells}")
+        print(f"far2:     {b.cells}")
+        print(f"distance: {round(dist, 2)}")
+        print(f"evals:    {evals}")

@@ -118,9 +118,8 @@ class Data:
 
         return stats, bests, info
 
-    def farapart(self, rows, sortp, a):
-        # // -> integer division
-        far = int * ((len(rows) * config.value.Far) // 1)
+    def farapart(self, rows, sortp=None, a=None):
+        far = int((len(rows) * config.value.Far))
         evals = 1 if a else 2
         a = a or utils.any(rows).neighbors(self, rows)[far]
         b = a.neighbors(self, rows)[far]
