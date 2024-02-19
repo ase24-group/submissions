@@ -58,3 +58,13 @@ def pad_numbers(t):
 
 def any(t):
     return random.choice(t)
+
+def many(t, n):
+    if n==None:
+        n = len(t)
+
+    u = []    
+    for i in range(n):
+        u.append(any(t))
+
+    return u
