@@ -22,7 +22,7 @@ class Node:
     # Prints a tree by printing each node in order
     def show(self):
         def d2h(data):
-            return round(data.mid().d2h(self.here))
+            return round(data.mid().d2h(self.here), 2)
         max_depth = 0
 
         def _show(node, depth, leafp):
