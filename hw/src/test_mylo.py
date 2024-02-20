@@ -1,4 +1,5 @@
 from data import Data
+from utils import o
 
 
 class TestMylo:
@@ -24,3 +25,15 @@ class TestMylo:
         print(f"far2:     {b.cells}")
         print(f"distance: {round(dist, 2)}")
         print(f"evals:    {evals}")
+
+    def tree(self, t, evals):
+        d = Data("../data/auto93.csv")
+        t, evals[0] = d.tree(True)
+        t.show()
+        print(evals[0])
+
+    def branch(self, t, d, best, rest, evals):
+        d = Data("../data/auto93.csv")
+        best, rest, evals[0] = d.branch()
+        print(o(best.mid().cells), o(rest.mid().cells))
+        print(evals[0])
