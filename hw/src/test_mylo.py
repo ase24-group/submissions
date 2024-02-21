@@ -1,5 +1,5 @@
 from data import Data
-from utils import o
+from utils import output
 
 
 class TestMylo:
@@ -35,5 +35,5 @@ class TestMylo:
     def branch(self, t, d, best, rest, evals):
         d = Data("../data/auto93.csv")
         best, rest, evals[0] = d.branch()
-        print(o(best.mid().cells), o(rest.mid().cells))
+        print(output(best.mid().cells), output(rest.mid().cells))
         print(evals[0])
