@@ -26,14 +26,14 @@ class TestMylo:
         print(f"distance: {round(dist, 2)}")
         print(f"evals:    {evals}")
 
-    def tree(self, t, evals):
+    def tree(self):
         d = Data("../data/auto93.csv")
-        t, evals[0] = d.tree(True)
+        t, evals = d.tree(True)
         t.show()
-        print(evals[0])
+        print(evals)
 
-    def branch(self, t, d, best, rest, evals):
+    def branch(self):
         d = Data("../data/auto93.csv")
-        best, rest, evals[0] = d.branch()
+        best, rest, evals = d.branch()
         print(output(best.mid().cells), output(rest.mid().cells))
-        print(evals[0])
+        print(evals)
