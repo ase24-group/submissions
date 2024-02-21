@@ -1,7 +1,9 @@
 import utils
+import random
+import math
 from row import Row
 from cols import Cols
-import random
+from node import Node
 from config import config
 
 
@@ -139,7 +141,7 @@ class Data:
 
         def _branch(data, above=None, left=None, lefts=None, rights=None):
             if len(data.rows) > stop:
-                lefts, rights, left = self.half(data.rows, True, above)
+                lefts, rights, left, _, _, _, _ = self.half(data.rows, True, above)
                 evals[0] += 1
                 for row1 in rights:
                     rest.append(row1)
@@ -148,3 +150,43 @@ class Data:
                 return self.clone(data.rows), self.clone(rest), evals
 
         return _branch(self)
+
+    def tree(self, sortp):
+        evals = 0
+
+        def _tree(data, above=None):
+            nonlocal evals
+
+            node = Node(data)
+            if len(data.rows) > (2 * (len(self.rows) ** 0.5)):
+                lefts, rights, node.left, node.right, node.C, node.cut, evals1 = self.half(data.rows, sortp, above)
+                evals = evals + evals1
+                node.lefts  = _tree(self.clone(lefts), node.left)
+                node.rights = _tree(self.clone(rights), node.right)
+            return node
+
+        return _tree(self), evals
+
+    def half(self, rows, sortp, before):
+        a_list, b_list = [], []
+        some = utils.many(rows, min(config.value.Half, len(rows)))
+        a, b, C, evals = self.farapart(some, sortp, before)
+
+        def d(row1, row2):
+            return row1.dist(row2, self)
+        def project(r):
+            return (d(r, a)**2 + C**2 - d(r, b)**2)/(2*C)
+
+        for n, row in enumerate(sorted(rows, key=project)):
+            if n <= math.floor(len(rows)/2):
+                a_list.append(row)
+            else:
+                b_list.append(row)
+
+        return a_list, b_list, a, b, C, d(a, b_list[0]), evals
+
+    def clone(self, rows):
+        new = Data(self.cols.names)
+        for _, row in enumerate(rows):
+            new.add(row)
+        return new
