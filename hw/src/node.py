@@ -1,5 +1,4 @@
 import utils
-import math
 
 
 class Node:
@@ -30,12 +29,13 @@ class Node:
         max_depth = 0
 
         def _show(node, depth, leafp):
+            nonlocal max_depth
             post = (
                 (str(d2h(node.here)) + "\t" + utils.output(node.here.mid().cells))
                 if leafp
                 else ""
             )
-            max_depth = math.max(max_depth, depth)
+            max_depth = max(max_depth, depth)
             print(("|..") * depth + post)
 
         self.walk(_show)
