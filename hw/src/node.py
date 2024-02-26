@@ -31,17 +31,17 @@ class Node:
         def _show(node, depth, leafp):
             nonlocal max_depth
             post = (
-                (str(d2h(node.here)) + "\t" + utils.output(node.here.mid().cells))
+                (str(d2h(node.here)) + "\t" + utils.pad_numbers(node.here.mid().cells))
                 if leafp
                 else ""
             )
             max_depth = max(max_depth, depth)
-            print(("|..") * depth + post)
+            print(("|.. ") * depth + post)
 
         self.walk(_show)
         print(
             ("    ") * max_depth
             + str(d2h(self.here))
-            + utils.output(self.here.mid().cells)
+            + utils.pad_numbers(self.here.mid().cells)
         )
-        print(("    ") * max_depth + "_" + utils.output(self.here.cols.names))
+        print(("    ") * max_depth + "_" + utils.pad_numbers(self.here.cols.names))
