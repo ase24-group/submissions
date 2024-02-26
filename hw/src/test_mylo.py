@@ -37,3 +37,10 @@ class TestMylo:
         best, rest, evals = d.branch()
         print(output(best.mid().cells), output(rest.mid().cells))
         print(evals)
+
+    def doubletap(self):
+        d = Data("../data/auto93.csv")
+        best1, rest, evals1 = d.branch(32)
+        best2, _, evals2 = best1.branch(4)
+        print(output(best2.mid().cells), output(rest.mid().cells))
+        print(evals1 + evals2)
