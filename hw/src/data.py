@@ -130,19 +130,17 @@ class Data:
         return a, b, a.dist(b, self), evals
 
     def branch(self, stop=None, rest=None, _branch=None, evals=None):
-        if evals is None:
-            evals = [1]
-        else:
-            evals[0] = 1
-        if rest is None:
-            rest = []
+        evals = 1
+        rest = []
 
         stop = stop if stop else (2 * (len(self.rows) ** 0.5))
 
         def _branch(data, above=None, left=None, lefts=None, rights=None):
+            nonlocal evals
+
             if len(data.rows) > stop:
                 lefts, rights, left, _, _, _, _ = self.half(data.rows, True, above)
-                evals[0] += 1
+                evals += 1
                 for row1 in rights:
                     rest.append(row1)
                 return _branch(self.clone(lefts), left)

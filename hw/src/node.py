@@ -24,7 +24,7 @@ class Node:
     # Prints a tree by printing each node in order
     def show(self):
         def d2h(data):
-            return round(data.mid().d2h(self.here), 2)
+            return f" {round(data.mid().d2h(self.here), 2):<3}"
 
         max_depth = 0
 
@@ -33,7 +33,7 @@ class Node:
             post = (
                 (
                     str(d2h(node.here))
-                    + "\t\t\t"
+                    + "\t"
                     + utils.pad_numbers(node.here.mid().cells)
                 )
                 if leafp
@@ -47,7 +47,7 @@ class Node:
             "\n"
             + ("    ") * max_depth
             + str(d2h(self.here))
-            + "\t\t\t"
+            + "\t"
             + utils.pad_numbers(self.here.mid().cells)
         )
-        print(("    ") * max_depth + "_" + str(self.here.cols.names))
+        print(("    ") * max_depth + " _      " + str(self.here.cols.names))
