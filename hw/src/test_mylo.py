@@ -35,8 +35,9 @@ class TestMylo:
     def branch(self):
         d = Data("../data/auto93.csv")
         best, rest, evals = d.branch()
+        print("Centroid of output cluster:")
         print(pad_numbers(best.mid().cells), pad_numbers(rest.mid().cells))
-        print(evals)
+        print("Evals: " + str(evals))
 
     def doubletap(self):
         d = Data("../data/auto93.csv")
