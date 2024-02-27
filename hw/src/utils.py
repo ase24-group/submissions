@@ -52,7 +52,7 @@ def pad_numbers(t):
     if isinstance(t[0], list):
         s = f"[{', '.join([f'{pad_numbers(v)}' for v in t])}]"
     else:
-        s = f"[{', '.join([f'{v:5.2f}' for v in t])}]"
+        s = f"[{', '.join([f'{v:5.2f}' if (type(v) is float or type(v) is int) else v for v in t])}]"
     return s
 
 
