@@ -31,11 +31,7 @@ class Node:
         def _show(node, depth, leafp):
             nonlocal max_depth
             post = (
-                (
-                    str(d2h(node.here))
-                    + "\t"
-                    + utils.pad_numbers(node.here.mid().cells)
-                )
+                (str(d2h(node.here)) + "\t" + utils.pad_numbers(node.here.mid().cells))
                 if leafp
                 else ""
             )
