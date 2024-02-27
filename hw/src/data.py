@@ -159,9 +159,17 @@ class Data:
 
             node = Node(data)
             if len(data.rows) > (2 * (len(self.rows) ** 0.5)):
-                lefts, rights, node.left, node.right, node.C, node.cut, evals1 = self.half(data.rows, sortp, above)
+                (
+                    lefts,
+                    rights,
+                    node.left,
+                    node.right,
+                    node.C,
+                    node.cut,
+                    evals1,
+                ) = self.half(data.rows, sortp, above)
                 evals = evals + evals1
-                node.lefts  = _tree(self.clone(lefts), node.left)
+                node.lefts = _tree(self.clone(lefts), node.left)
                 node.rights = _tree(self.clone(rights), node.right)
             return node
 
@@ -174,11 +182,12 @@ class Data:
 
         def d(row1, row2):
             return row1.dist(row2, self)
+
         def project(r):
-            return (d(r, a)**2 + C**2 - d(r, b)**2)/(2*C)
+            return (d(r, a) ** 2 + C**2 - d(r, b) ** 2) / (2 * C)
 
         for n, row in enumerate(sorted(rows, key=project)):
-            if n <= math.floor(len(rows)/2):
+            if n <= math.floor(len(rows) / 2):
                 a_list.append(row)
             else:
                 b_list.append(row)
