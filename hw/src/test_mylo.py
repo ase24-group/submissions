@@ -1,5 +1,5 @@
 from data import Data
-from utils import output
+from utils import pad_numbers
 
 
 class TestMylo:
@@ -35,12 +35,13 @@ class TestMylo:
     def branch(self):
         d = Data("../data/auto93.csv")
         best, rest, evals = d.branch()
-        print(output(best.mid().cells), output(rest.mid().cells))
-        print(evals)
+        print("Centroid of output cluster:")
+        print(pad_numbers(best.mid().cells), pad_numbers(rest.mid().cells))
+        print("Evals: " + str(evals))
 
     def doubletap(self):
         d = Data("../data/auto93.csv")
         best1, rest, evals1 = d.branch(32)
         best2, _, evals2 = best1.branch(4)
-        print(output(best2.mid().cells), output(rest.mid().cells))
+        print(pad_numbers(best2.mid().cells), pad_numbers(rest.mid().cells))
         print(evals1 + evals2)

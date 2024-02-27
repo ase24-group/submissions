@@ -130,19 +130,17 @@ class Data:
         return a, b, a.dist(b, self), evals
 
     def branch(self, stop=None, rest=None, _branch=None, evals=None):
-        if evals is None:
-            evals = [1]
-        else:
-            evals[0] = 1
-        if rest is None:
-            rest = []
+        evals = 1
+        rest = []
 
         stop = stop if stop else (2 * (len(self.rows) ** 0.5))
 
         def _branch(data, above=None, left=None, lefts=None, rights=None):
+            nonlocal evals
+
             if len(data.rows) > stop:
                 lefts, rights, left, _, _, _, _ = self.half(data.rows, True, above)
-                evals[0] += 1
+                evals += 1
                 for row1 in rights:
                     rest.append(row1)
                 return _branch(self.clone(lefts), left)
@@ -159,9 +157,17 @@ class Data:
 
             node = Node(data)
             if len(data.rows) > (2 * (len(self.rows) ** 0.5)):
-                lefts, rights, node.left, node.right, node.C, node.cut, evals1 = self.half(data.rows, sortp, above)
+                (
+                    lefts,
+                    rights,
+                    node.left,
+                    node.right,
+                    node.C,
+                    node.cut,
+                    evals1,
+                ) = self.half(data.rows, sortp, above)
                 evals = evals + evals1
-                node.lefts  = _tree(self.clone(lefts), node.left)
+                node.lefts = _tree(self.clone(lefts), node.left)
                 node.rights = _tree(self.clone(rights), node.right)
             return node
 
@@ -174,11 +180,12 @@ class Data:
 
         def d(row1, row2):
             return row1.dist(row2, self)
+
         def project(r):
-            return (d(r, a)**2 + C**2 - d(r, b)**2)/(2*C)
+            return (d(r, a) ** 2 + C**2 - d(r, b) ** 2) / (2 * C)
 
         for n, row in enumerate(sorted(rows, key=project)):
-            if n <= math.floor(len(rows)/2):
+            if n <= math.floor(len(rows) / 2):
                 a_list.append(row)
             else:
                 b_list.append(row)
