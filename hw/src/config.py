@@ -7,6 +7,8 @@ USAGE:
   python3 gate.py [OPTIONS]
 
 OPTIONS:
+  -b --budget0  initial evals                   = 4
+  -B --Budget   subsequent evals                = 5
   -c --cohen    small effect size               = .35
   -f --file     csv data file name              = ../data/diabetes.csv
   -h --help     show help                       = false
@@ -14,6 +16,7 @@ OPTIONS:
   -m --m        low attribute frequency kludge  = 2
   -s --seed     random number seed              = 31210
   -t --todo     start up action                 = help
+  -T --Top      best section                    = .5
 """
 
 MYLO_DOC = """

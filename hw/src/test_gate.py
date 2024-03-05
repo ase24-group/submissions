@@ -1,7 +1,9 @@
-import os
-from utils import coerce, output, output_gate20_info
+import os, random
+from datetime import datetime
+from utils import coerce, output, output_gate20_info, align_list
 from data import Data
 from box import Box
+from num import Num
 from config import config
 
 
@@ -120,6 +122,76 @@ class TestGate:
 
         output_gate20_info(info)
 
+    def smos(self):
+        date = datetime.now().strftime("%m/%d/%Y %H:%M:%S")
+        file = "../data/auto93.csv"
+        repeats = 20
+
+        data = Data(file, fun=None, sortD2H=False)
+
+        label_width = 10
+        print(f"date    : {date}")
+        print(f"file    : {file}")
+        print(f"repeats : {repeats}")
+        print(f"seed    : {config.value.seed}")
+        print(f"rows    : {len(data.rows)}")
+        print(f"cols    : {len(data.cols.names)}")
+
+        names = f"{'names':{label_width}}{align_list(data.cols.names)}"
+        print(names)
+
+        mid = f"{'mid':{label_width}}{align_list(data.mid().cells)}"
+        print(mid)
+
+        div = f"{'div':{label_width}}{align_list(data.div().cells)}"
+        print(div)
+
+        print("#")
+
+        smo9s = [data.smo(score = lambda b, r: 2*b-r) for _ in range(repeats)]
+        smo9s = sorted(smo9s, key = lambda row: row.d2h(data))
+        for row in smo9s:
+            label = f"smo{config.value.budget0 + config.value.Budget}"
+            smo9 = f"{label:{label_width}}{align_list(row.cells)}"
+            print(smo9)
+
+        print("#")
+
+        any50s = []
+        for _ in range(repeats):
+           random.shuffle(data.rows)
+           any50s += [data.clone(data.rows[:50], sortD2H=True).rows[0]]
+        for row in  sorted(any50s, key = lambda row: row.d2h(data)):
+            label = "any50"
+            any50 = f"{label:{label_width}}{align_list(row.cells)}"
+            print(any50)
+        
+        print("#")
+
+        all = f"{'100%':{label_width}}{align_list(data.clone(data.rows, sortD2H=True).rows[0].cells)}"
+        print(all)
+
+    def smocompare(self):
+        date = datetime.now().strftime("%m/%d/%Y %H:%M:%S")
+        file = "../data/auto93.csv"
+        repeats = 20
+
+        data = Data(file, fun=None, sortD2H=False)
+
+        label_width = 10
+        print(f"date    : {date}")
+        print(f"file    : {file}")
+        print(f"repeats : {repeats}")
+        print(f"seed    : {config.value.seed}")
+        print(f"rows    : {len(data.rows)}")
+        print(f"cols    : {len(data.cols.names)}")
+
+
+        d2h_values = Num("d2h_values", 0)
+        for row in data.clone(data.rows, sortD2H=True).rows:
+            d2h_values.add(row.d2h(data))
+        print(f"best    : {round(d2h_values.lo, 2)}")
+        print(f"tiny    : {round(d2h_values.div() * config.value.cohen, 2)}")
 
 def learn(data, row, my) -> None:
     my.n += 1

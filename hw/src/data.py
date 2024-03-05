@@ -1,6 +1,7 @@
 import utils
 import random
 import math
+import sys
 from row import Row
 from cols import Cols
 from node import Node
@@ -8,7 +9,7 @@ from config import config
 
 
 class Data:
-    def __init__(self, src, fun=None):
+    def __init__(self, src, fun=None, sortD2H=False):
         self.rows = []
         self.cols = None
         if type(src) == str:
@@ -16,6 +17,11 @@ class Data:
                 self.add(x, fun)
         else:
             self.add(src, fun)
+        if sortD2H:
+            self.sortD2H()
+
+    def sortD2H(self):
+        self.rows = sorted(self.rows, key = lambda row: row.d2h(self))
 
     def add(self, t, fun=None):
         row = t if hasattr(t, "cells") else Row(t)
@@ -32,9 +38,9 @@ class Data:
             u.append(col.mid())
         return Row(u)
 
-    def div(self, cols):
+    def div(self, cols=None):
         u = []
-        for _, col in cols or self.cols.all:
+        for col in cols or self.cols.all:
             u.append(col.div())
         return Row(u)
 
@@ -44,7 +50,7 @@ class Data:
             u[col.txt] = round(col.mid(), ndivs)
         return u
 
-    def split(self, best, rest, lite, dark):
+    def split(self, best, rest, lite, dark, score = lambda b, r: abs(b + r) / abs(b - r + 1e-300)):
         selected = Data(self.cols.names)
         max = 1e30
         out = 1
@@ -55,7 +61,7 @@ class Data:
             if b > r:
                 selected.add(row)
 
-            tmp = abs(b + r) / abs(b - r + 1e-300)
+            tmp = score(b, r)
             if tmp > max:
                 out, max = i, tmp
         return out, selected
@@ -119,6 +125,22 @@ class Data:
             lite.append(dark.pop(todo))
 
         return stats, bests, info
+
+    def smo(self, score = None):
+        random.shuffle(self.rows)
+
+        lite = utils.slice(self.rows, 0, config.value.budget0)
+        dark = utils.slice(self.rows, config.value.budget0 + 1)
+
+        data = self.clone(lite, sortD2H=True)
+        for i in range(config.value.Budget):
+            best, rest = self.best_rest(lite, len(lite) ** config.value.Top)
+            todo, _ = self.split(best, rest, lite, dark, score = score)
+
+            lite.append(dark.pop(todo))
+            data = self.clone(lite, sortD2H=True)
+
+        return data.rows[0]
 
     def farapart(self, rows, sortp=None, a=None):
         far = int((len(rows) * config.value.Far))
@@ -192,8 +214,12 @@ class Data:
 
         return a_list, b_list, a, b, C, d(a, b_list[0]), evals
 
-    def clone(self, rows):
+    def clone(self, rows, sortD2H=False):
         new = Data(self.cols.names)
         for _, row in enumerate(rows):
             new.add(row)
+
+        if sortD2H:
+            new.sortD2H()
+
         return new
