@@ -148,8 +148,8 @@ class TestGate:
 
         print("#")
 
-        smo9s = [data.smo(score = lambda b, r: 2*b-r) for _ in range(repeats)]
-        smo9s = sorted(smo9s, key = lambda row: row.d2h(data))
+        smo9s = [data.smo(score=lambda b, r: 2 * b - r) for _ in range(repeats)]
+        smo9s = sorted(smo9s, key=lambda row: row.d2h(data))
         for row in smo9s:
             label = f"smo{config.value.budget0 + config.value.Budget}"
             smo9 = f"{label:{label_width}}{align_list(row.cells)}"
@@ -159,13 +159,13 @@ class TestGate:
 
         any50s = []
         for _ in range(repeats):
-           random.shuffle(data.rows)
-           any50s += [data.clone(data.rows[:50], sortD2H=True).rows[0]]
-        for row in  sorted(any50s, key = lambda row: row.d2h(data)):
+            random.shuffle(data.rows)
+            any50s += [data.clone(data.rows[:50], sortD2H=True).rows[0]]
+        for row in sorted(any50s, key=lambda row: row.d2h(data)):
             label = "any50"
             any50 = f"{label:{label_width}}{align_list(row.cells)}"
             print(any50)
-        
+
         print("#")
 
         all = f"{'100%':{label_width}}{align_list(data.clone(data.rows, sortD2H=True).rows[0].cells)}"
@@ -186,12 +186,12 @@ class TestGate:
         print(f"rows    : {len(data.rows)}")
         print(f"cols    : {len(data.cols.names)}")
 
-
         d2h_values = Num("d2h_values", 0)
         for row in data.clone(data.rows, sortD2H=True).rows:
             d2h_values.add(row.d2h(data))
         print(f"best    : {round(d2h_values.lo, 2)}")
         print(f"tiny    : {round(d2h_values.div() * config.value.cohen, 2)}")
+
 
 def learn(data, row, my) -> None:
     my.n += 1

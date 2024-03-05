@@ -59,7 +59,7 @@ def pad_numbers(t):
 def align_list(lst, precision=2, pad=15):
     out = "["
     for i, cell in enumerate(lst):
-        if isinstance(cell,(int,float)):
+        if isinstance(cell, (int, float)):
             cell = cell if int(cell) == cell else round(cell, precision)
         if isinstance(cell, str):
             cell = f"'{cell}'"

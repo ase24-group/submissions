@@ -24,7 +24,7 @@ class Sym:
     def div(self):
         entropy = 0
         for value in self.has.values():
-            entropy = entropy - value / self.n * math.log(value/self.n, 2)
+            entropy = entropy - value / self.n * math.log(value / self.n, 2)
         return entropy
 
     def like(self, x: str, prior: float):

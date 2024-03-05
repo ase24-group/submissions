@@ -21,7 +21,7 @@ class Data:
             self.sortD2H()
 
     def sortD2H(self):
-        self.rows = sorted(self.rows, key = lambda row: row.d2h(self))
+        self.rows = sorted(self.rows, key=lambda row: row.d2h(self))
 
     def add(self, t, fun=None):
         row = t if hasattr(t, "cells") else Row(t)
@@ -50,7 +50,14 @@ class Data:
             u[col.txt] = round(col.mid(), ndivs)
         return u
 
-    def split(self, best, rest, lite, dark, score = lambda b, r: abs(b + r) / abs(b - r + 1e-300)):
+    def split(
+        self,
+        best,
+        rest,
+        lite,
+        dark,
+        score=lambda b, r: abs(b + r) / abs(b - r + 1e-300),
+    ):
         selected = Data(self.cols.names)
         max = 1e30
         out = 1
@@ -126,7 +133,7 @@ class Data:
 
         return stats, bests, info
 
-    def smo(self, score = None):
+    def smo(self, score=None):
         random.shuffle(self.rows)
 
         lite = utils.slice(self.rows, 0, config.value.budget0)
@@ -135,7 +142,7 @@ class Data:
         data = self.clone(lite, sortD2H=True)
         for i in range(config.value.Budget):
             best, rest = self.best_rest(lite, len(lite) ** config.value.Top)
-            todo, _ = self.split(best, rest, lite, dark, score = score)
+            todo, _ = self.split(best, rest, lite, dark, score=score)
 
             lite.append(dark.pop(todo))
             data = self.clone(lite, sortD2H=True)
