@@ -141,7 +141,9 @@ class Data:
 
         data = self.clone(lite, sortD2H=True)
         for i in range(config.value.Budget):
-            best, rest = self.best_rest(data.rows, int(len(data.rows) ** config.value.Top + 0.5))
+            best, rest = self.best_rest(
+                data.rows, int(len(data.rows) ** config.value.Top + 0.5)
+            )
             todo, _ = self.split(best, rest, self.rows, dark, score=score)
 
             lite.append(dark.pop(todo))

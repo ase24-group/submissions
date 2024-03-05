@@ -199,15 +199,49 @@ class TestGate:
 
         for budget in [9, 15, 20]:
             config.value.Budget = budget - config.value.budget0
-            print("#bonr"+str(budget), end=" ")
-            stats.append(Sample([data.smo(score=lambda b, r: abs(b + r) / abs(b - r + sys.float_info.min)).d2h(data) for _ in range(repeats)], txt="#bonr"+str(budget)))
-            print("#rand"+str(budget), end=" ")
-            stats.append(Sample([data.clone(shuffle(data.rows[:budget]), sortD2H=True).rows[0].d2h(data) for _ in range(repeats)], txt="#rand"+str(budget)))
-        print("#rand"+str(int(0.9*len(data.rows))), end=" ")
-        stats.append(Sample([data.clone(shuffle(data.rows[:int(0.9*len(data.rows))]), sortD2H=True).rows[0].d2h(data) for _ in range(repeats)], txt="#rand"+str(int(0.9*len(data.rows)))))            
+            print("#bonr" + str(budget), end=" ")
+            stats.append(
+                Sample(
+                    [
+                        data.smo(
+                            score=lambda b, r: abs(b + r)
+                            / abs(b - r + sys.float_info.min)
+                        ).d2h(data)
+                        for _ in range(repeats)
+                    ],
+                    txt="#bonr" + str(budget),
+                )
+            )
+            print("#rand" + str(budget), end=" ")
+            stats.append(
+                Sample(
+                    [
+                        data.clone(shuffle(data.rows[:budget]), sortD2H=True)
+                        .rows[0]
+                        .d2h(data)
+                        for _ in range(repeats)
+                    ],
+                    txt="#rand" + str(budget),
+                )
+            )
+        print("#rand" + str(int(0.9 * len(data.rows))), end=" ")
+        stats.append(
+            Sample(
+                [
+                    data.clone(
+                        shuffle(data.rows[: int(0.9 * len(data.rows))]), sortD2H=True
+                    )
+                    .rows[0]
+                    .d2h(data)
+                    for _ in range(repeats)
+                ],
+                txt="#rand" + str(int(0.9 * len(data.rows))),
+            )
+        )
 
         print("\n#report" + str(len(stats)))
         eg0(stats)
+
 
 def learn(data, row, my) -> None:
     my.n += 1
@@ -217,6 +251,7 @@ def learn(data, row, my) -> None:
         my.acc += 1 if kl == row.likes(my.datas)[0] else 0
     my.datas[kl] = my.datas.get(kl, Data(data.cols.names))  # default value --> new data
     my.datas[kl].add(row, None)
+
 
 def shuffle(rows):
     random.shuffle(rows)
