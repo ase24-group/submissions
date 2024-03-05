@@ -145,7 +145,7 @@ class Data:
             todo, _ = self.split(best, rest, lite, dark, score=score)
 
             lite.append(dark.pop(todo))
-            data = self.clone(lite, sortD2H=True)
+        data = self.clone(lite, sortD2H=True)
 
         return data.rows[0]
 
