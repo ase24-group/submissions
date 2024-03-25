@@ -1,5 +1,7 @@
 from data import Data
-from utils import pad_numbers
+from utils import pad_numbers, slice, oo, rnd, o, as_list
+import random
+from config import config
 
 
 class TestMylo:
@@ -45,3 +47,85 @@ class TestMylo:
         best2, _, evals2 = best1.branch(4)
         print(pad_numbers(best2.mid().cells), pad_numbers(rest.mid().cells))
         print(evals1 + evals2)
+
+    def bins(self):
+        bins("../data/auto93.csv", config.value.Beam)
+
+
+def bins(file_path, Beam):
+    d = Data(file_path)
+    best, rest = d.branch()
+    LIKE = best.rows
+    random.shuffle(rest.rows)
+    HATE = slice(rest.rows, 0, 3 * len(LIKE))
+
+    def score(range):
+        return range.score("LIKE", len(LIKE), len(HATE))
+
+    t = []
+    for col in d.cols.values():
+        print("")
+        for range in _ranges1(col, {"LIKE": LIKE, "HATE": HATE}):
+            oo(range)
+            t.append(range)
+    t.sort(key=lambda a, b: score(a) > score(b))
+    max = score[0]
+
+    print("\n#scores:\n")
+
+    for v in slice(t, 0, Beam):
+        if score(v) > max * 0.1:
+            print(rnd(score(v)), o(v))
+    oo({"LIKE": len(LIKE), "HATE": len(HATE)})
+
+
+def _ranges(cols, rowss):
+    t = []
+    for col in cols:
+        for range in _ranges1(col, rowss):
+            t.append(range)
+    return t
+
+
+def _mergeds(ranges, too_few):
+    i = 1
+    t = {}
+
+    while i <= len(ranges):
+        a = ranges[i]
+        if i < len(ranges):
+            both = a.merged(ranges[i], too_few)
+            if both:
+                a = both
+                i += 1
+            t.append(a)
+            i += 1
+
+    if len(t) < len(ranges):
+        return _mergeds(t, too_few)
+
+    for i in range(2, len(t) + 1):
+        t[i].x.lo = t[i - 1].x.hi
+    t[i].x.lo = -1 * float("inf")
+    t[-1].x.hi = float("inf")
+
+    return t
+
+
+def _ranges1(col, rowss):
+    out = {}
+    nrows = 0
+
+    for y, rows in rowss.items():
+        nrows += len(rows)
+
+        for row in rows.values():
+            x = row.cells[col.at]
+
+            if x != "?":
+                bin = col.bin(x)
+                out[bin] = out[bin] if out[bin] else Range(col.at, col.txt, x)
+                out[bin].add(x, y)
+    out = as_list(out)
+    out.sort(key=lambda a, b: a.x.lo < b.x.lo)
+    return col.has if out else _mergeds(out, nrows / config.value.bins)

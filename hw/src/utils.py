@@ -1,5 +1,6 @@
 import fileinput, re, ast
 import random
+import math
 
 
 # Reference: https://discord.com/channels/1191838787219759154/1192507528882438247/1195863830136377345
@@ -80,4 +81,42 @@ def many(t, n):
     for i in range(n):
         u.append(any(t))
 
+    return u
+
+
+def oo(x):
+    print(o(x))
+    return x
+
+
+def o(t, n):
+    if isinstance(t, (int, float)):
+        return str(round(random.uniform(0, t), n))
+    if not isinstance(t, dict):
+        return str(t)
+
+    u = []
+    for k, v in t.items():
+        if not str(k).startswith("_"):
+            if len(t) > 0:
+                u.append(o(v, n))
+            else:
+                u.append(f"{o(k, n)}: {o(v, n)}")
+
+    return "{" + ", ".join(u) + "}"
+
+
+def rnd(n: float, ndecs: int = 2):
+    if not isinstance(n, (int, float)):
+        return n
+    if math.floor(n) == n:
+        return n
+    mult = 10**ndecs
+    return math.floor(n * mult + 0.5) / mult
+
+
+def as_list(t):
+    u = []
+    for v in t:
+        u.append(v)
     return u
