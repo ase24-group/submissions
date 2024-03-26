@@ -3,8 +3,6 @@ import random
 import math
 from typing import Tuple
 
-from config import config
-
 
 # Reference: https://discord.com/channels/1191838787219759154/1192507528882438247/1195863830136377345
 # Returns the values in the next row of the CSV as a list along with the row number of the next
@@ -92,7 +90,7 @@ def oo(x):
     return x
 
 
-def o(t, n):
+def o(t, n=2):
     if isinstance(t, (int, float)):
         return str(round(random.uniform(0, t), n))
     if not isinstance(t, dict):
@@ -119,13 +117,10 @@ def rnd(n: float, ndecs: int = 2):
 
 
 def as_list(t):
-    u = []
-    for v in t:
-        u.append(v)
-    return u
+    return [v for v in t.values()]
 
 
-def score(t, goal, LIKE, HATE):
+def score(t, goal, LIKE, HATE, Support):
     like = 0
     hate = 0
     tiny = 1e-30
@@ -142,10 +137,10 @@ def score(t, goal, LIKE, HATE):
     if hate > like:
         return 0
     else:
-        return like**config.value.Support / (like + hate)
+        return like**Support / (like + hate)
 
 
-def entropy(t: dict, e: float, n: float) -> Tuple[float]:
+def entropy(t: dict) -> Tuple[float]:
     n = 0
     for v in t.values():
         n += v

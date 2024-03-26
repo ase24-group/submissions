@@ -1,6 +1,7 @@
 from typing import Optional
 
 from utils import score, entropy
+from config import config
 
 
 class Range:
@@ -15,8 +16,8 @@ class Range:
         self.y = {}
 
     def add(self, x: float, y: float) -> None:
-        self.x.lo = min(self.x.lo, x)
-        self.x.hi = max(self.x.hi, x)
+        self.x["lo"] = min(self.x["lo"], x)
+        self.x["hi"] = max(self.x["hi"], x)
         self.y[y] = self.y.get(y, 0) + 1
 
     def show(
@@ -25,8 +26,8 @@ class Range:
         hi: Optional[float] = None,
         s: Optional[str] = None,
     ) -> str:
-        lo = lo if lo else self.x.lo
-        hi = hi if hi else self.x.hi
+        lo = lo if lo else self.x["lo"]
+        hi = hi if hi else self.x["hi"]
         s = s if s else self.txt
 
         if lo == -1 * float("inf"):
@@ -36,17 +37,17 @@ class Range:
         if lo == hi:
             return f"{lo} <= {s} < {hi}"
 
-        lo, hi, s = self.x.lo, self.x.hi, self.txt
+        lo, hi, s = self.x["lo"], self.x["hi"], self.txt
 
     def score(self, goal, LIKE, HATE):
-        return score(self.y, goal, LIKE, HATE)
+        return score(self.y, goal, LIKE, HATE, config.value.Support)
 
     def merge(self, other):
-        both = Range(self.at, self.txt, self.x.lo)
-        both.x.lo = min(self.x.lo, other.x.lo)
-        both.x.hi = max(self.x.hi, other.x.hi)
+        both = Range(self.at, self.txt, self.x["lo"])
+        both.x["lo"] = min(self.x["lo"], other.x["lo"])
+        both.x["hi"] = max(self.x["hi"], other.x["hi"])
 
-        for _, t in zip(self.y, other.y):
+        for t in [self.y, other.y]:
             for k, v in t.items():
                 both.y[k] = both.y.get(k, 0) + v
 
@@ -60,5 +61,5 @@ class Range:
 
         if n1 <= too_few or n2 <= too_few:
             return both
-        if entropy(both.y) <= (n1 * e1 + n2 * e2) / (n1 + n2):
+        if entropy(both.y)[0] <= (n1 * e1 + n2 * e2) / (n1 + n2):
             return both

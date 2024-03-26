@@ -55,7 +55,7 @@ class TestMylo:
 
 def bins(file_path, Beam):
     d = Data(file_path)
-    best, rest = d.branch()
+    best, rest, _ = d.branch()
     LIKE = best.rows
     random.shuffle(rest.rows)
     HATE = slice(rest.rows, 0, 3 * len(LIKE))
@@ -64,13 +64,13 @@ def bins(file_path, Beam):
         return range.score("LIKE", len(LIKE), len(HATE))
 
     t = []
-    for col in d.cols.values():
+    for col in d.cols.x.values():
         print("")
         for range in _ranges1(col, {"LIKE": LIKE, "HATE": HATE}):
             oo(range)
             t.append(range)
-    t.sort(key=lambda a, b: score(a) > score(b))
-    max = score[0]
+    t.sort(key=lambda x: score(x), reverse=True)
+    max = score(t[0])
 
     print("\n#scores:\n")
 
@@ -90,9 +90,9 @@ def _ranges(cols, rowss):
 
 def _mergeds(ranges, too_few):
     i = 1
-    t = {}
+    t = []
 
-    while i <= len(ranges):
+    while i < len(ranges):
         a = ranges[i]
         if i < len(ranges):
             both = a.merged(ranges[i], too_few)
@@ -106,9 +106,11 @@ def _mergeds(ranges, too_few):
         return _mergeds(t, too_few)
 
     for i in range(2, len(t) + 1):
-        t[i].x.lo = t[i - 1].x.hi
-    t[i].x.lo = -1 * float("inf")
-    t[-1].x.hi = float("inf")
+        t[i].x["lo"] = t[i - 1].x["hi"]
+
+    if len(t) > 0:
+        t[0].x["lo"] = -1 * float("inf")
+        t[-1].x["hi"] = float("inf")
 
     return t
 
@@ -120,13 +122,18 @@ def _ranges1(col, rowss):
     for y, rows in rowss.items():
         nrows += len(rows)
 
-        for row in rows.values():
+        for row in rows:
             x = row.cells[col.at]
 
             if x != "?":
                 bin = col.bin(x)
-                out[bin] = out[bin] if out[bin] else Range(col.at, col.txt, x)
+                out[bin] = out[bin] if out.get(bin) else Range(col.at, col.txt, x)
                 out[bin].add(x, y)
+
     out = as_list(out)
-    out.sort(key=lambda a, b: a.x.lo < b.x.lo)
-    return col.has if out else _mergeds(out, nrows / config.value.bins)
+    out.sort(key=lambda x: x.x["lo"])
+
+    if hasattr(col, "has") and col.has:
+        return out
+    else:
+        return _mergeds(out, nrows / config.value.bins)
