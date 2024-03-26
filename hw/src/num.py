@@ -1,4 +1,5 @@
 import math
+from config import config
 
 
 class Num:
@@ -52,3 +53,7 @@ class Num:
             y = 1 if x < 0.5 else 0
 
         return abs(x - y)
+
+    def bin(self, x: float):
+        tmp = (self.hi - self.lo) / (config.value.bins - 1)
+        return self.hi == self.lo and 1 or math.floor(x / tmp + 0.5) * tmp
