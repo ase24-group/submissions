@@ -1,5 +1,9 @@
 import fileinput, re, ast
 import random
+import math
+from typing import Tuple
+
+from config import config
 
 
 # Reference: https://discord.com/channels/1191838787219759154/1192507528882438247/1195863830136377345
@@ -81,3 +85,73 @@ def many(t, n):
         u.append(any(t))
 
     return u
+
+
+def oo(x):
+    print(o(x))
+    return x
+
+
+def o(t, n):
+    if isinstance(t, (int, float)):
+        return str(round(random.uniform(0, t), n))
+    if not isinstance(t, dict):
+        return str(t)
+
+    u = []
+    for k, v in t.items():
+        if not str(k).startswith("_"):
+            if len(t) > 0:
+                u.append(o(v, n))
+            else:
+                u.append(f"{o(k, n)}: {o(v, n)}")
+
+    return "{" + ", ".join(u) + "}"
+
+
+def rnd(n: float, ndecs: int = 2):
+    if not isinstance(n, (int, float)):
+        return n
+    if math.floor(n) == n:
+        return n
+    mult = 10**ndecs
+    return math.floor(n * mult + 0.5) / mult
+
+
+def as_list(t):
+    u = []
+    for v in t:
+        u.append(v)
+    return u
+
+
+def score(t, goal, LIKE, HATE):
+    like = 0
+    hate = 0
+    tiny = 1e-30
+
+    for klass, n in t.items():
+        if klass == goal:
+            like += n
+        else:
+            hate += n
+
+    like = like / (LIKE + tiny)
+    hate = hate / (HATE + tiny)
+
+    if hate > like:
+        return 0
+    else:
+        return like**config.value.Support / (like + hate)
+
+
+def entropy(t: dict, e: float, n: float) -> Tuple[float]:
+    n = 0
+    for v in t.values():
+        n += v
+
+    e = 0
+    for v in t.values():
+        e -= v / n * math.log2(v / n)
+
+    return e, n
