@@ -94,7 +94,7 @@ def o(t, n=2):
     if isinstance(t, (int, float)):
         return str(round(random.uniform(0, t), n))
     if not isinstance(t, dict):
-        return str(t)
+        return vars(t)
 
     u = []
     for k, v in t.items():
