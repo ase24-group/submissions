@@ -3,6 +3,7 @@ from utils import pad_numbers, slice, oo, rnd, o, as_list
 import random
 from config import config
 from range import Range
+from sym import Sym
 
 
 class TestMylo:
@@ -67,8 +68,9 @@ def bins(file_path, Beam):
     for col in d.cols.x.values():
         print("")
         for range in _ranges1(col, {"LIKE": LIKE, "HATE": HATE}):
-            oo(range)
+            print(o(range))
             t.append(range)
+
     t.sort(key=lambda x: score(x), reverse=True)
     max = score(t[0])
 
@@ -77,35 +79,41 @@ def bins(file_path, Beam):
     for v in slice(t, 0, Beam):
         if score(v) > max * 0.1:
             print(rnd(score(v)), o(v))
-    oo({"LIKE": len(LIKE), "HATE": len(HATE)})
+    # print(o({"LIKE": len(LIKE), "HATE": len(HATE)}))
+    # oo({"LIKE": len(LIKE), "HATE": len(HATE)})
 
 
-def _ranges(cols, rowss):
-    t = []
-    for col in cols:
-        for range in _ranges1(col, rowss):
-            t.append(range)
-    return t
+# def _ranges(cols, rowss):
+#     t = []
+#     for col in cols:
+#         for range in _ranges1(col, rowss):
+#             t.append(range)
+#     return t
 
 
 def _mergeds(ranges, too_few):
-    i = 1
+    i = 0
     t = []
 
+    # for i, range in enumerate(ranges.values()):
+    #     if i != len(ranges) - 1:
+    #         both = range.merged(ranges[i + 1], too_few)
+    #         if both:
+    #             range = both
     while i < len(ranges):
         a = ranges[i]
-        if i < len(ranges):
-            both = a.merged(ranges[i], too_few)
+        if i < len(ranges) - 1:
+            both = a.merged(ranges[i + 1], too_few)
             if both:
                 a = both
                 i += 1
             t.append(a)
-            i += 1
+        i += 1
 
-    if len(t) < len(ranges):
+    if len(t) < len(ranges):  # and len(t) > 2:
         return _mergeds(t, too_few)
 
-    for i in range(2, len(t) + 1):
+    for i in range(1, len(t)):
         t[i].x["lo"] = t[i - 1].x["hi"]
 
     if len(t) > 0:
@@ -133,7 +141,7 @@ def _ranges1(col, rowss):
     out = as_list(out)
     out.sort(key=lambda x: x.x["lo"])
 
-    if hasattr(col, "has") and col.has:
+    if type(col) == Sym:
         return out
     else:
         return _mergeds(out, nrows / config.value.bins)
