@@ -2,6 +2,7 @@ from data import Data
 from utils import pad_numbers, slice, oo, rnd, o, as_list
 import random
 from config import config
+from range import Range
 
 
 class TestMylo:

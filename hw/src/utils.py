@@ -1,6 +1,9 @@
 import fileinput, re, ast
 import random
 import math
+from typing import Tuple
+
+from config import config
 
 
 # Reference: https://discord.com/channels/1191838787219759154/1192507528882438247/1195863830136377345
@@ -120,3 +123,35 @@ def as_list(t):
     for v in t:
         u.append(v)
     return u
+
+
+def score(t, goal, LIKE, HATE):
+    like = 0
+    hate = 0
+    tiny = 1e-30
+
+    for klass, n in t.items():
+        if klass == goal:
+            like += n
+        else:
+            hate += n
+
+    like = like / (LIKE + tiny)
+    hate = hate / (HATE + tiny)
+
+    if hate > like:
+        return 0
+    else:
+        return like**config.value.Support / (like + hate)
+
+
+def entropy(t: dict, e: float, n: float) -> Tuple[float]:
+    n = 0
+    for v in t.values():
+        n += v
+
+    e = 0
+    for v in t.values():
+        e -= v / n * math.log2(v / n)
+
+    return e, n
