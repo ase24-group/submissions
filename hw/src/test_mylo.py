@@ -107,7 +107,7 @@ def _mergeds(ranges, too_few):
             if both:
                 a = both
                 i += 1
-            t.append(a)
+        t.append(a)
         i += 1
 
     if len(t) < len(ranges):  # and len(t) > 2:
