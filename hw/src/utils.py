@@ -92,7 +92,7 @@ def oo(x):
 
 def o(t, n=2):
     if isinstance(t, (int, float)):
-        return str(round(random.uniform(0, t), n))
+        return str(round(t, n))
     if not isinstance(t, dict):
         return vars(t)
 
@@ -105,15 +105,6 @@ def o(t, n=2):
                 u.append(f"{o(k, n)}: {o(v, n)}")
 
     return "{" + ", ".join(u) + "}"
-
-
-def rnd(n: float, ndecs: int = 2):
-    if not isinstance(n, (int, float)):
-        return n
-    if math.floor(n) == n:
-        return n
-    mult = 10**ndecs
-    return math.floor(n * mult + 0.5) / mult
 
 
 def as_list(t):

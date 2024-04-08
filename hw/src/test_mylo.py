@@ -1,5 +1,5 @@
 from data import Data
-from utils import pad_numbers, slice, oo, rnd, o, as_list
+from utils import pad_numbers, slice, as_list
 import random
 from config import config
 from range import Range
@@ -68,7 +68,7 @@ def bins(file_path, Beam):
     for col in d.cols.x.values():
         print("")
         for range in _ranges1(col, {"LIKE": LIKE, "HATE": HATE}):
-            print(o(range))
+            print(vars(range))
             t.append(range)
 
     t.sort(key=lambda x: score(x), reverse=True)
@@ -78,9 +78,8 @@ def bins(file_path, Beam):
 
     for v in slice(t, 0, Beam):
         if score(v) > max * 0.1:
-            print(rnd(score(v)), o(v))
-    # print(o({"LIKE": len(LIKE), "HATE": len(HATE)}))
-    # oo({"LIKE": len(LIKE), "HATE": len(HATE)})
+            print(round(score(v), 2), "\t", vars(v))
+    print({"LIKE": len(LIKE), "HATE": len(HATE)})
 
 
 # def _ranges(cols, rowss):
