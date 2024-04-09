@@ -68,7 +68,9 @@ class TestMylo:
         rules = Rules(_ranges(d.cols.x, rowss), "LIKE", rowss).sorted
 
         print(f"\n{'score':<{9}}{'mid selected':<{64}}{'rule':<{10}}")
-        print(f"{'-----':<{9}}{'------------------------------------------------------------':<{64}}{'----':<{10}}")
+        print(
+            f"{'-----':<{9}}{'------------------------------------------------------------':<{64}}{'----':<{10}}"
+        )
         for _, rule in enumerate(rules):
             result = d.clone(rule.selects(rest.rows))
             if len(result.rows) > 0:
@@ -83,13 +85,13 @@ class TestMylo:
 
     def rules2(self):
         d = Data("../data/auto93.csv")
-          
+
         tmp = random.sample(d.rows, len(d.rows))
-        train = d.clone(tmp[:math.floor(len(tmp)/2)])
-        test  = d.clone(tmp[math.floor(len(tmp)/2) + 1:])
+        train = d.clone(tmp[: math.floor(len(tmp) / 2)])
+        test = d.clone(tmp[math.floor(len(tmp) / 2) + 1 :])
         test.rows = sorted(test.rows, key=lambda a: a.d2h(d))
         random.shuffle(test.rows)
-        
+
         best0, rest, evals1 = train.branch(config.value.d)
         best, _, evals2 = best0.branch(config.value.D)
         print(f"evals\t {evals1 + evals2 + config.value.D - 1}")
@@ -105,7 +107,9 @@ class TestMylo:
         rules = Rules(_ranges(train.cols.x, rowss), "LIKE", rowss).sorted
 
         print(f"\n{'score':<{9}}{'mid selected':<{64}}{'rule':<{10}}")
-        print(f"{'-----':<{9}}{'------------------------------------------------------------':<{64}}{'----':<{10}}")
+        print(
+            f"{'-----':<{9}}{'------------------------------------------------------------':<{64}}{'----':<{10}}"
+        )
         for _, rule in enumerate(rules):
             result = train.clone(rule.selects(test.rows))
             if len(result.rows) > 0:
@@ -115,8 +119,9 @@ class TestMylo:
                     "\t",
                     pad_numbers(result.mid().cells),
                     "\t",
-                    rule.show()
+                    rule.show(),
                 )
+
 
 def bins(file_path, Beam):
     d = Data(file_path)
