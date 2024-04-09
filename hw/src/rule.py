@@ -31,14 +31,14 @@ class Rule:
         return True
 
     def selects(self, rows):
-        t=[]
+        t = []
         for r in rows:
             if self._and(r):
                 t.append(r)
         return t
 
     def selectss(self, rowss):
-        t={}
+        t = {}
         for y, rows in rowss.items():
             t[y] = len(self.selects(rows))
         return t
@@ -52,7 +52,7 @@ class Rule:
                 ors[i] = range.show()
             ands.append(" or ".join(ors))
         return " and ".join(ands)
-    
+
     def _show_less(self, t, ready=False):
         if not ready:
             t = t[:]
@@ -62,8 +62,8 @@ class Rule:
         while i < len(t):
             a = t[i]
             if i < len(t) - 1:
-                if a.x["hi"] == t[i+1].x["lo"]:
-                    a = a.merge(t[i+1])
+                if a.x["hi"] == t[i + 1].x["lo"]:
+                    a = a.merge(t[i + 1])
                     i += 1
             u.append(a)
             i += 1
