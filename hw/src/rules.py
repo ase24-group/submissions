@@ -1,6 +1,7 @@
 import utils
 from config import config
 
+
 class Rules:
     def __init__(self, ranges, goal, rowss):
         for k, v in enumerate(rowss):
@@ -24,7 +25,7 @@ class Rules:
 
     def score(self, t):
         return utils.score(t, self.goal, self.LIKE, self.HATE)
-    
+
     def _try(self, ranges):
         u = []
         for subset in utils.powerset(ranges):
@@ -33,8 +34,8 @@ class Rules:
                 rule.scored = self.scored(rule.selectss(self.rowss))
                 if rule.scored > 0.01:
                     u.append(rule)
-        return u 
-    
+        return u
+
     def top(t):
         t = sorted(t, key=lambda x: x.scored, reverse=True)
         u = []
