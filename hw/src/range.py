@@ -35,9 +35,9 @@ class Range:
         if hi == float("inf"):
             return f"{s} >= {lo}"
         if lo == hi:
-            return f"{lo} <= {s} < {hi}"
+            return f"{s} == {lo}"
 
-        lo, hi, s = self.x["lo"], self.x["hi"], self.txt
+        return f"{lo} <= {s} < {hi}"
 
     def score(self, goal, LIKE, HATE):
         return score(self.y, goal, LIKE, HATE, config.value.Support)

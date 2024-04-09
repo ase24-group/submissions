@@ -59,13 +59,15 @@ class TestMylo:
 
         best0, rest, evals1 = d.branch(config.value.d)
         best, _, evals2 = best0.branch(config.value.D)
-        print(evals1 + evals2 + config.value.D - 1)
+        print(f"evals: {evals1 + evals2 + config.value.D - 1}")
         LIKE = best.rows
         random.shuffle(rest.rows)
         HATE = slice(rest.rows, 0, 3 * len(LIKE))
         rowss = {"LIKE": LIKE, "HATE": HATE}
+        rules = Rules(_ranges(d.cols.x, rowss), "LIKE", rowss).sorted
 
-        for _, rule in enumerate(Rules(_ranges(d.cols.x, rowss), "LIKE", rowss).sorted):
+        print(f"{'score':<{9}}{'mid selected':<{64}}{'rule':<{10}}")
+        for _, rule in enumerate(rules):
             result = d.clone(rule.selects(rest.rows))
             if len(result.rows) > 0:
                 result.rows = sorted(result.rows, key=lambda a: a.d2h(d))

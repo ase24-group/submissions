@@ -129,7 +129,10 @@ def score(t, goal, LIKE, HATE, Support):
     if hate > like:
         return 0
     else:
-        return like**Support / (like + hate)
+        try:
+            return like**Support / (like + hate)
+        except ZeroDivisionError:
+            return float("inf")
 
 
 def entropy(t: dict) -> Tuple[float]:

@@ -5,8 +5,8 @@ from rule import Rule
 
 class Rules:
     def __init__(self, ranges, goal, rowss):
-        for k, v in enumerate(rowss):
-            print(k, len(v))
+        for k, v in rowss.items():
+            print(k, "\t", len(v))
         self.sorted = {}
         self.goal = goal
         self.rowss = rowss
