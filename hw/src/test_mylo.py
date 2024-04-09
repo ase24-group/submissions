@@ -60,14 +60,15 @@ class TestMylo:
 
         best0, rest, evals1 = d.branch(config.value.d)
         best, _, evals2 = best0.branch(config.value.D)
-        print(f"evals: {evals1 + evals2 + config.value.D - 1}")
+        print(f"evals\t {evals1 + evals2 + config.value.D - 1}")
         LIKE = best.rows
         random.shuffle(rest.rows)
         HATE = slice(rest.rows, 0, 3 * len(LIKE))
         rowss = {"LIKE": LIKE, "HATE": HATE}
         rules = Rules(_ranges(d.cols.x, rowss), "LIKE", rowss).sorted
 
-        print(f"{'score':<{9}}{'mid selected':<{64}}{'rule':<{10}}")
+        print(f"\n{'score':<{9}}{'mid selected':<{64}}{'rule':<{10}}")
+        print(f"{'-----':<{9}}{'------------------------------------------------------------':<{64}}{'----':<{10}}")
         for _, rule in enumerate(rules):
             result = d.clone(rule.selects(rest.rows))
             if len(result.rows) > 0:
@@ -103,7 +104,8 @@ class TestMylo:
         rand.rows = sorted(rand.rows, key=lambda a: a.d2h(d))
         rules = Rules(_ranges(train.cols.x, rowss), "LIKE", rowss).sorted
 
-        print(f"{'score':<{9}}{'mid selected':<{64}}{'rule':<{10}}")
+        print(f"\n{'score':<{9}}{'mid selected':<{64}}{'rule':<{10}}")
+        print(f"{'-----':<{9}}{'------------------------------------------------------------':<{64}}{'----':<{10}}")
         for _, rule in enumerate(rules):
             result = train.clone(rule.selects(test.rows))
             if len(result.rows) > 0:
