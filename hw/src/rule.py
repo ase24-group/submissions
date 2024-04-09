@@ -70,4 +70,4 @@ class Rule:
         if len(u) == len(t):
             return t
         else:
-            self._show_less(t, ready)
+            return self._show_less(u, ready)
