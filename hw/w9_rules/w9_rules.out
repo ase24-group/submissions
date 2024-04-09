@@ -16,3 +16,15 @@ score    mid selected                                                    rule
 0.67     [ 4.00, 95.25,  0.00, 76.25,  2.00, 1973.00, 13.70, 30.00]      origin == 2 and Volume < 97.5 and 75 <= Model < 78
 ✅ PASS rules2
 
+
+
+Observed Explanation Tax in this scenario:
+
+Rules only provide us with a general summary of the data. They are not capable of capturing all the intrinsic complexities of the data.
+For example the rule with the highest score in the above output ("origin==2") only reveals to us that almost all entries in the selected cluster
+has a value of 2 for the "origin" attribute. We do not obtain any information about the other attributes from this rule. Explanation tax refers to 
+this loss of details during explanation.
+
+For the sake of summarizing/explanation, reports use a single row in the cluster to represent the entire cluster. Due to this, we are not able to 
+see all entries belonging to that cluster. This is another example of explanation tax.
+
