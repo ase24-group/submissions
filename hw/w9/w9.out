@@ -23,14 +23,15 @@
 
 #scores:
 
-0.63 {'at': 4, 'txt': 'origin', 'scored': 0, 'x': {'lo': 2, 'hi': 2}, 'y': {'LIKE': 20, 'HATE': 13}}
-0.54 {'at': 0, 'txt': 'Clndrs', 'scored': 0, 'x': {'lo': -inf, 'hi': 4}, 'y': {'HATE': 38, 'LIKE': 22}}
-0.33 {'at': 1, 'txt': 'Volume', 'scored': 0, 'x': {'lo': 90, 'hi': 116}, 'y': {'LIKE': 12, 'HATE': 14}}
-0.32 {'at': 3, 'txt': 'Model', 'scored': 0, 'x': {'lo': 79, 'hi': 80}, 'y': {'LIKE': 9, 'HATE': 2}}
-0.17 {'at': 1, 'txt': 'Volume', 'scored': 0, 'x': {'lo': -inf, 'hi': 90}, 'y': {'LIKE': 6, 'HATE': 6}}
-0.1 {'at': 1, 'txt': 'Volume', 'scored': 0, 'x': {'lo': 141, 'hi': 183}, 'y': {'LIKE': 4, 'HATE': 6}}
-0.1 {'at': 3, 'txt': 'Model', 'scored': 0, 'x': {'lo': 78, 'hi': 79}, 'y': {'LIKE': 4, 'HATE': 6}}
-0.1 {'at': 3, 'txt': 'Model', 'scored': 0, 'x': {'lo': 80, 'hi': 81}, 'y': {'LIKE': 4, 'HATE': 6}}
-0.08 {'at': 3, 'txt': 'Model', 'scored': 0, 'x': {'lo': 76, 'hi': 78}, 'y': {'LIKE': 4, 'HATE': 10}}
-0.06 {'at': 3, 'txt': 'Model', 'scored': 0, 'x': {'lo': 75, 'hi': 76}, 'y': {'LIKE': 3, 'HATE': 7}}
+0.63     {'at': 4, 'txt': 'origin', 'scored': 0, 'x': {'lo': 2, 'hi': 2}, 'y': {'LIKE': 20, 'HATE': 13}}
+0.54     {'at': 0, 'txt': 'Clndrs', 'scored': 0, 'x': {'lo': -inf, 'hi': 4}, 'y': {'HATE': 38, 'LIKE': 22}}
+0.33     {'at': 1, 'txt': 'Volume', 'scored': 0, 'x': {'lo': 90, 'hi': 116}, 'y': {'LIKE': 12, 'HATE': 14}}
+0.32     {'at': 3, 'txt': 'Model', 'scored': 0, 'x': {'lo': 79, 'hi': 80}, 'y': {'LIKE': 9, 'HATE': 2}}
+0.17     {'at': 1, 'txt': 'Volume', 'scored': 0, 'x': {'lo': -inf, 'hi': 90}, 'y': {'LIKE': 6, 'HATE': 6}}
+0.1      {'at': 1, 'txt': 'Volume', 'scored': 0, 'x': {'lo': 141, 'hi': 183}, 'y': {'LIKE': 4, 'HATE': 6}}
+0.1      {'at': 3, 'txt': 'Model', 'scored': 0, 'x': {'lo': 78, 'hi': 79}, 'y': {'LIKE': 4, 'HATE': 6}}
+0.1      {'at': 3, 'txt': 'Model', 'scored': 0, 'x': {'lo': 80, 'hi': 81}, 'y': {'LIKE': 4, 'HATE': 6}}
+0.08     {'at': 3, 'txt': 'Model', 'scored': 0, 'x': {'lo': 76, 'hi': 78}, 'y': {'LIKE': 4, 'HATE': 10}}
+0.06     {'at': 3, 'txt': 'Model', 'scored': 0, 'x': {'lo': 75, 'hi': 76}, 'y': {'LIKE': 3, 'HATE': 7}}
+{'LIKE': 26, 'HATE': 78}
 ✅ PASS bins
