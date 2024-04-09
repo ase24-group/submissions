@@ -1,5 +1,6 @@
 import utils
 from config import config
+from rule import Rule
 
 
 class Rules:
@@ -13,8 +14,8 @@ class Rules:
 
         self.like_hate()
         for range in ranges:
-            range.scored = self.scored(range.y)
-        self.scored = self.top(self._try(self.top))
+            range.scored = self.score(range.y)
+        self.sorted = self.top(self._try(self.top(ranges)))
 
     def like_hate(self):
         for y, rows in enumerate(self.rowss):
@@ -24,19 +25,19 @@ class Rules:
                 self.HATE += len(rows)
 
     def score(self, t):
-        return utils.score(t, self.goal, self.LIKE, self.HATE)
+        return utils.score(t, self.goal, self.LIKE, self.HATE, config.value.Support)
 
     def _try(self, ranges):
         u = []
         for subset in utils.powerset(ranges):
             if len(subset) > 0:
                 rule = Rule(subset)
-                rule.scored = self.scored(rule.selectss(self.rowss))
+                rule.scored = self.score(rule.selectss(self.rowss))
                 if rule.scored > 0.01:
                     u.append(rule)
         return u
 
-    def top(t):
+    def top(self, t):
         t = sorted(t, key=lambda x: x.scored, reverse=True)
         u = []
         for x in t:
