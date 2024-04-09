@@ -62,13 +62,19 @@ class TestMylo:
         LIKE = best.rows
         random.shuffle(rest.rows)
         HATE = slice(rest.rows, 0, 3 * len(LIKE))
-        rowss = { "LIKE": LIKE, "HATE": HATE }
+        rowss = {"LIKE": LIKE, "HATE": HATE}
 
         for _, rule in enumerate(Rules(_ranges(d.cols.x, rowss), "LIKE", rowss).sorted):
             result = d.clone(rule.selects(rest.rows))
             if len(result.rows) > 0:
                 result.rows = sorted(result.rows, key=lambda a: a.d2h(d))
-                print(round(rule.scored, 2), "\t", pad_numbers(result.mid().cells), "\t", rule.show())
+                print(
+                    round(rule.scored, 2),
+                    "\t",
+                    pad_numbers(result.mid().cells),
+                    "\t",
+                    rule.show(),
+                )
 
 
 def bins(file_path, Beam):
