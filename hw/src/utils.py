@@ -127,12 +127,12 @@ def score(t, goal, LIKE, HATE, Support):
     hate = hate / (HATE + tiny)
 
     if hate > like:
-        return 0
+        return float(0)
     else:
         try:
             return like**Support / (like + hate)
         except ZeroDivisionError:
-            return float("inf")
+            return float(0)
 
 
 def entropy(t: dict) -> Tuple[float]:

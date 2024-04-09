@@ -18,7 +18,7 @@ class Rules:
         self.sorted = self.top(self._try(self.top(ranges)))
 
     def like_hate(self):
-        for y, rows in enumerate(self.rowss):
+        for y, rows in self.rowss.items():
             if y == self.goal:
                 self.LIKE += len(rows)
             else:
