@@ -1,5 +1,5 @@
 from data import Data
-from utils import pad_numbers, slice, as_list
+from utils import pad_numbers, slice, as_list, powerset
 import random
 from config import config
 from range import Range
@@ -53,6 +53,23 @@ class TestMylo:
     def bins(self):
         bins("../data/auto93.csv", config.value.Beam)
 
+    def rules(self):
+        d = Data("../data/auto93.csv")
+
+        best0, rest, evals1 = d.branch(config.value.d)
+        best, _, evals2 = best0.branch(config.value.D)
+        print(evals1 + evals2 + config.value.D - 1)
+        LIKE = best.rows
+        random.shuffle(rest.rows)
+        HATE = slice(rest.rows, 0, 3 * len(LIKE))
+        rowss = { "LIKE": LIKE, "HATE": HATE }
+
+        for _, rule in enumerate(Rules(_ranges(d.cols.x, rowss), "LIKE", rowss).sorted):
+            result = d.clone(rule.selects(rest.rows))
+            if len(result.rows) > 0:
+                result.rows = sorted(result.rows, key=lambda a: a.d2h(d))
+                print(round(rule.scored, 2), "\t", pad_numbers(result.mid().cells), "\t", rule.show())
+
 
 def bins(file_path, Beam):
     d = Data(file_path)
@@ -82,12 +99,12 @@ def bins(file_path, Beam):
     print({"LIKE": len(LIKE), "HATE": len(HATE)})
 
 
-# def _ranges(cols, rowss):
-#     t = []
-#     for col in cols:
-#         for range in _ranges1(col, rowss):
-#             t.append(range)
-#     return t
+def _ranges(cols, rowss):
+    t = []
+    for col in cols:
+        for range in _ranges1(col, rowss):
+            t.append(range)
+    return t
 
 
 def _mergeds(ranges, too_few):

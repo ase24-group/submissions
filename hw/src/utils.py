@@ -2,6 +2,7 @@ import fileinput, re, ast
 import random
 import math
 from typing import Tuple
+from itertools import chain, combinations
 
 
 # Reference: https://discord.com/channels/1191838787219759154/1192507528882438247/1195863830136377345
@@ -141,3 +142,7 @@ def entropy(t: dict) -> Tuple[float]:
         e -= v / n * math.log2(v / n)
 
     return e, n
+
+def powerset(iterable):
+    s = list(iterable)
+    return chain.from_iterable(combinations(s, r) for r in range(len(s)+1))
