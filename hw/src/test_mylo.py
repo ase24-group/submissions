@@ -4,6 +4,7 @@ import random
 from config import config
 from range import Range
 from sym import Sym
+from rules import Rules
 
 
 class TestMylo:
@@ -107,7 +108,7 @@ def bins(file_path, Beam):
 
 def _ranges(cols, rowss):
     t = []
-    for col in cols:
+    for _, col in cols.items():
         for range in _ranges1(col, rowss):
             t.append(range)
     return t
